@@ -1,0 +1,6 @@
+1. JS资源
+	jquery.lazyload.js用于懒加载静态资源(图片等)
+
+
+TODO:
+    a. 消除页面中的onclick="moreurl(this, {from:'mv_l_tg'})"函数调用，以Google Analytics替换

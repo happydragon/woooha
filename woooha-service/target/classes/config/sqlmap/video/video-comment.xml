@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="VideoComment">
+	<typeAlias alias="VideoComment" type="com.woooha.entity.video.VideoComment" />
+	
+	<resultMap id="VideoCommentResult" class="VideoComment">
+		<result column="ID" property="id"/>
+		<result column="VideoId" property="videoId"/>
+		<result column="UserId" property="userId"/>
+		<result column="Content" property="content"/>
+		<result column="CreateTime" property="createTime"/>
+	</resultMap>
+
+    <resultMap id="VideoCommentFullResult" class="VideoComment" extends="VideoCommentResult">
+        <result column="VideoAbbrTitle" property="videoAbbrTitle"/>
+        <result column="VideoUserScore" property="videoUserScore"/>
+        <result column="UserPic" property="userPic"/>
+        <result column="UserNickName" property="userNickName"/>
+    </resultMap>
+
+	<select id="findLatestComments" resultMap="VideoCommentFullResult" parameterClass="int">
+		<![CDATA[
+		SELECT vc.*, u.NickName AS UserNickName, u.Pic AS UserPic, v.AbbrTitle AS VideoAbbrTitle, v.UserScore AS VideoUserScore
+		FROM video_comment vc LEFT JOIN `user` u ON vc.UserID = u.ID
+		  LEFT JOIN video v ON vc.VideoID = v.ID
+		ORDER BY vc.CreateTime DESC
+		LIMIT #limit#
+		]]>
+    </select>
+
+</sqlMap>

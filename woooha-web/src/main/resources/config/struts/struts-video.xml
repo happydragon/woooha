@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="video" namespace="/video" extends="default">
+		
+		<action name="videoList" class="com.woooha.web.action.VideoListAction" method="index">
+			<result name="success">/WEB-INF/pages/video/video-index.ftl</result>
+		</action>
+		
+		<action name="videoDetail" class="com.woooha.web.action.VideoDetailAction" method="detail">
+			<result name="success">/WEB-INF/pages/video/video-detail.ftl</result>
+		</action>
+		
+	</package>
+
+</struts>

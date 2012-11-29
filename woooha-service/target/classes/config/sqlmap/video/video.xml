@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Video">
+	<typeAlias alias="Video" type="com.woooha.entity.video.Video" />
+	<typeAlias alias="VideoTag" type="com.woooha.entity.video.VideoTag" />
+
+	<resultMap id="VideoResult" class="Video">
+		<result column="ID" property="id"/>
+		<result column="Title" property="title"/>
+		<result column="AbbrTitle" property="abbrTitle"/>
+		<result column="Score" property="score"/>
+		<result column="Comment" property="comment"/>
+		<result column="UserScore" property="userScore"/>
+		<result column="RecommendCount" property="recommendCount"/>
+		<result column="CategoryId" property="categoryId"/>
+		<result column="Pic" property="pic"/>
+		<result column="Url" property="url"/>
+		<result column="FromSite" property="fromSite"/>
+		<result column="CommentCount" property="commentCount"/>
+		<result column="InTopHotList" property="inTopHotList"/>
+		<result column="CreateTime" property="createTime"/>
+	</resultMap>
+
+    <resultMap id="VideoTagResult" class="VideoTag">
+        <result column="ID" property="id"/>
+        <result column="Name" property="name"/>
+        <result column="Order" property="order"/>
+    </resultMap>
+
+	<select id="findTopHotList" resultMap="VideoResult">
+		<![CDATA[
+		SELECT * FROM video where InTopHotList > 0 ORDER BY InTopHotList DESC
+		]]>
+    </select>
+
+    <select id="findTopRecommendList" resultMap="VideoResult" parameterClass="int">
+        <![CDATA[
+		SELECT * FROM video ORDER BY RecommendCount DESC LIMIT #limit#
+		]]>
+    </select>
+
+    <select id="findTopNewVideos" resultMap="VideoResult" parameterClass="int">
+        <![CDATA[
+		SELECT * FROM video ORDER BY CreateTime DESC LIMIT #limit#
+		]]>
+    </select>
+
+    <select id="findById" resultMap="VideoResult" parameterClass="int">
+        <![CDATA[SELECT * FROM video WHERE ID = #id#]]>
+    </select>
+
+    <select id="getVideoTags" resultMap="VideoTagResult">
+        <![CDATA[SELECT * FROM video_tag ORDER BY `Order` DESC]]>
+    </select>
+
+</sqlMap>
