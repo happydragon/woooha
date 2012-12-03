@@ -1,5 +1,7 @@
 package com.woooha.entity.video;
 
+import com.woooha.util.StringUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,6 +22,7 @@ public class VideoComment implements Serializable {
     private String userPic;
     private String userNickName;
     private String content;
+    private VideoComment replyTo;
     private Date createTime;
 
     public int getId() {
@@ -48,6 +51,10 @@ public class VideoComment implements Serializable {
 
     public String getContent() {
         return content;
+    }
+
+    public String getShortContent() {
+        return StringUtils.cutString(content, 90, null);
     }
 
     public void setContent(String content) {
@@ -88,6 +95,14 @@ public class VideoComment implements Serializable {
 
     public void setUserPic(String userPic) {
         this.userPic = userPic;
+    }
+
+    public VideoComment getReplyTo() {
+        return replyTo;
+    }
+
+    public void setReplyTo(VideoComment replyTo) {
+        this.replyTo = replyTo;
     }
 
     public String getUserNickName() {

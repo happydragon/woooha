@@ -1,7 +1,7 @@
 <html>
 	<head>
-		<title>喔哈视频-武汉快闪MM</title>
-		<#--include "/WEB-INF/pages/video/video-index-seg-css.ftl"-->
+		<title>${video.title}</title>
+        <#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
 		<style type="text/css">
 			.suggest-overlay{position:absolute;z-index:10001;width:auto;background:#fff;border:1px solid #c5c7d2;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.suggest-overlay .bd{min-width:220px;line-height:1;background:#fafafa;color:#b3b3b3;padding:5px;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.suggest-overlay ul{color:#333;padding:3px 0;min-width:214px}.suggest-overlay li{margin:0;padding:0}.suggest-overlay li b{font-weight:bold}.suggest-overlay li span{color:#999}.suggest-overlay img{margin-right:5px;width:20px;height:20px;vertical-align:middle}.suggest-overlay li.on{background:#e9f0f8}.suggest-overlay li a{display:block;padding:3px 7px;color:#333}.suggest-overlay li a:hover,.suggest-overlay li a:focus,.suggest-overlay li a:active{outline:0;color:#333;background:0;background:#e9f0f8}
 			
@@ -22,6 +22,7 @@
 			.reply-comment p { width:30em;padding:6px;margin:0; }
 			.reply-comment .pubdate { white-space:nowrap;margin-left:10px; }
 		</style>
+        <script type="text/javascript" src="<@s.url value="/js/swfobject.js"/>"></script>
 	</head>
 	<body>
 		<div id="content">
@@ -29,17 +30,19 @@
 			    <div class="base_info">
 			        <h1 class="title">
 			        	<span class="label">视频:</span>
-						<span id="subtitle">百人横扫吴江路！！！ 中国最棒的快闪（FLASH MOB)！！！</span>
+						<span id="subtitle">${video.title}</span>
 			        </h1>
 		            <!--引导-->
 					<div class="guide">
 						<div class="crumbs">
 							<span id="cateInfo">
-								<a href="http://ent.youku.com/" target="_blank" charset="400-02-1">视频娱乐</a>
+								<a href="http://ent.youku.com/" target="_blank" charset="400-02-1">所属标签</a>
 							</span>  
 							&gt;
-							<a href="http://www.youku.com/v_showlist/t2d1c86.html" charset="400-02-2" target="_blank">快闪</a>
-						</div>		
+                            <@s.iterator value="tags">
+                                <a href="http://www.youku.com/v_showlist/t2d1c86.html" charset="400-02-2" target="_blank">${name}</a>&nbsp;
+                            </@s.iterator>
+						</div>
 					</div>
 			    </div>
 			    <div class="clear"></div> 
@@ -50,57 +53,11 @@
 					<div>
 						<div id="link-report">
 							<div style="text-align:left">
-								<!--
-								<embed src="http://static.youku.com/v/swf/qplayer.swf?VideoIDS=XMTkzOTI3OTM2=&isAutoPlay=true&isShowRelatedVideo=false&embedid=&showAd=0" 
-									allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" 
-									type="application/x-shockwave-flash"></embed>
-								-->
-								<object type="application/x-shockwave-flash" data="http://static.youku.com/v1.0.0287/v/swf/loader.swf" width="588" height="480" id="movie_player">
-									<param name="allowFullScreen" value="true">
-									<param name="allowscriptaccess" value="always">
-									<param name="flashvars" value="VideoIDS=XMjk5NjUwMDg0&amp;isAutoPlay=false&amp;winType=interior">
-									<param name="movie" value="http://static.youku.com/v1.0.0287/v/swf/loader.swf">
-									<div class="player_html5">
-										<div class="picture" style="height:100%">
-											<div style="line-height:460px;">
-												<span style="font-size:18px">您还没有安装flash播放器,请点击<a href="http://www.adobe.com/go/getflash" target="_blank">这里</a>安装</span>
-											</div>
-										</div>
-									</div>
-								</object>
+                                <div id="videoPlayer" style="width: 588px; height: 480px;"><p>视频加载中...</p></div>
 
-                                <object id="playerObject" name="playerObject" width="590" height="480" data="http://js.tudouui.com/bin/player_online/TudouVideoPlayer_Homer_NewSkin_39.swf"
-                                        type="application/x-shockwave-flash">
-                                    <param name="allowfullscreen" value="true">
-                                    <param name="allowscriptaccess" value="always">
-                                    <param name="quality" value="high">
-                                    <param name="flashvars"
-                                    value="listType=0&amp;iid=157652616&amp;hd=3&amp;href=http%3A%2F%2Fwww.tudou.com%2Fprograms%2Fview%2F6GAXjwt6xU8%2F%3Ffr%3Drec2&amp;phd=-1&amp;title=%5B%E7%94%9F%E5%91%BD%E4%B8%8D%E6%81%AF%2C%E6%88%98%E6%96%97%E4%B8%8D%E6%AD%A2%5DIAM.XiaoKai%20vs%20We.Gigabyte.Sky">
-                                </object>
-
-                                <!--
-                                <EMBED width="590" height="480" type=application/x-shockwave-flash pluginspage=http://www.macromedia.com/go/getflashplayer
-                                       src=http://www.tudou.com/v/-HWyCazMaFA/&amp;autoPlay=false/v.swf ALLOWNETWORKING="internal"
-                                       QUALITY="high" INVOKEURLS="false" WMODE="transparent" >
-                                </EMBED>
-
-                                <object id="playerObject2" name="playerObject" width="590" height="480" data="http://js.tudouui.com/bin/player_online/TudouVideoPlayer_Homer_NewSkin_39.swf"
-                                        type="application/x-shockwave-flash">
-                                    <param name="allowfullscreen" value="true">
-                                    <param name="allowscriptaccess" value="always">
-                                    <param name="quality" value="high">
-                                    <param name="flashvars"
-                                           value="listType=0&amp;iid=120184744&amp;hd=3&amp;href=http%3A%2F%2Fwww.tudou.com%2Flistplay%2FCsZPDM0aBWc%2FCRhsq9JNx3s.html&amp;phd=-1&amp;title=UGC%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%89%A7%E5%9C%BA%E7%AC%AC%E4%BA%94%E6%9C%9F-%E3%80%8A%E6%88%98%E5%A3%AB%E3%80%8B">
-                                </object>
-                                -->
-                                <!--
-                                <embed src="http://www.tudou.com/v/-HWyCazMaFA/&resourceId=0_05_05_99&bid=05/v.swf"
-                                       type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque"
-                                       width="590" height="480"></embed>
-                                -->
 							</div>
 							<div class="photo_descri">
-								<div class="edtext pl">介绍：上海吴江路，一群快闪爱好者聚集在一起，舞动青春，很有活力，让人感叹岁月无情啊，老了老了-_-!。</div>
+								<div class="edtext pl">介绍：${video.comment}。</div>
 							</div>
 							<!--
 							<div class="report" style="visibility: visible;"><a rel="nofollow" href="#">举报</a></div>
@@ -112,7 +69,7 @@
 						    #link-report .report a:hover { color: #FFF; background-color: #BBB; }
 						</style>
 					    <div style="color:#999;margin-bottom:5px" class="report-link">
-					        上传于2012-10-25
+					        上传于${video.createTime?date}
 					    </div>
 					</div>
 					<div class="sns-bar">
@@ -121,14 +78,8 @@
 								<span>
 									<a href="https://www.douban.com/accounts/register?reason=collect" class="j a_show_login lnk-sharing lnk-douban-sharing">推荐</a>
 								</span>
-								<span class="rec-num">35人</span>
+								<span class="rec-num">${video.recommendCount}人</span>
 							</div>
-							<!--
-							<span class="fav-num" data-tid="1784781807" data-tkind="1025">
-								<a href="#">46人</a>喜欢
-							</span>
-							<a class="fav-add btn-fav j a_show_login" title="标为喜欢？" href="http://www.douban.com/accounts/register?reason=like" data-tid="1784781807" data-tkind="1025">喜欢</a>
-							-->
 						</div>
 						
 						<div class="sns-bar-rec">
@@ -140,44 +91,39 @@
 							</span>
 							<div id="interest_sectl">
 							    <div class="rating_wrap clearbox" rel="v:rating">
-							    <p class="rating_self clearfix" typeof="v:Rating">
-							        <span class="ll bigstar30"></span>
-							        <strong class="ll rating_num" property="v:average">5.8</strong>
-							        <span property="v:best" content="10.0"></span>
-							    </p>
-							    <p class="rating_self font_normal">(<a href="collections"><span property="v:votes">2474</span>人评价</a>)</p>
-							    <span class="stars5 starstop" title="力荐"></span><div class="power" style="width:2px"></div>
-							    2.2%<br>
-							            <span class="stars4 starstop" title="推荐"></span><div class="power" style="width:13px"></div>
-							    12.5%<br>
-							            <span class="stars3 starstop" title="还行"></span><div class="power" style="width:59px"></div>
-							    56.5%<br>
-							            <span class="stars2 starstop" title="较差"></span><div class="power" style="width:25px"></div>
-							    24.0%<br>
-							            <span class="stars1 starstop" title="很差"></span><div class="power" style="width:5px"></div>
-							    4.8%<br>
+                                    <p class="rating_self clearfix" typeof="v:Rating">
+                                        <span class="ll bigstar${video.userStar}"></span>
+                                        <strong class="ll rating_num" property="v:average">${video.userScore}</strong>
+                                        <span property="v:best" content="10.0"></span>
+                                    </p>
+                                    <p class="rating_self font_normal">(<a href="collections"><span property="v:votes">${video.commentCount}</span>人评价</a>)</p>
+                                    <span class="stars5 starstop" title="力荐"></span><div class="power" style="width:${scoreStatsMap["10"].percentage}px"></div>${scoreStatsMap["10"].percentage?string('0.0')}%<br>
+                                    <span class="stars4 starstop" title="推荐"></span><div class="power" style="width:${scoreStatsMap["8"].percentage}px"></div>${scoreStatsMap["8"].percentage?string('0.0')}%<br>
+                                    <span class="stars3 starstop" title="还行"></span><div class="power" style="width:${scoreStatsMap["6"].percentage}px"></div>${scoreStatsMap["6"].percentage?string('0.0')}%<br>
+                                    <span class="stars2 starstop" title="较差"></span><div class="power" style="width:${scoreStatsMap["4"].percentage}px"></div>${scoreStatsMap["4"].percentage?string('0.0')}%<br>
+                                    <span class="stars1 starstop" title="很差"></span><div class="power" style="width:${scoreStatsMap["2"].percentage}px"></div>${scoreStatsMap["2"].percentage?string('0.0')}%<br>
 								</div>
 							</div>
 							<div class="ll j a_stars rec-sec">评价:
 							    <span id="rating">
 							    	<span id="stars">
-									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-1">
-									    	<img src="http://img3.douban.com/pics/sth.gif" id="star1">
+									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-1" data-label="很差">
+									    	<img src="http://img3.douban.com/pics/nst.gif" id="star1">
 									    </a>
-									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-2">
+									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-2" data-label="较差">
 									    	<img src="http://img3.douban.com/pics/nst.gif" id="star2">
 									    </a>
-									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-3">
+									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-3" data-label="还行">
 									    	<img src="http://img3.douban.com/pics/nst.gif" id="star3">
 									    </a>
-									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-4">
+									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-4" data-label="推荐">
 									    	<img src="http://img3.douban.com/pics/nst.gif" id="star4">
 									    </a>
-									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-5">
+									    <a href="http://www.douban.com/register?reason=rate" class="j a_show_login" name="pbtn-6781967-5" data-label="力荐">
 									    	<img src="http://img3.douban.com/pics/nst.gif" id="star5">
 									    </a>
 								    </span>
-							    	<span id="rateword" class="pl">很差</span>
+							    	<span id="rateword" class="pl"></span>
 							    	<input id="n_rating" type="hidden" value="">
 							    </span>
 							</div>
@@ -187,24 +133,34 @@
 					<br />
 					
 					<!-- begin of comment -->
-					
 					<div id="comments">
-						<div class="comment-item" id="118902543" data-cid="118902543" data-target_id="1784781807" data-target_kind="1025">
+                        <@s.iterator value="comments">
+						<div class="comment-item" id="${id}">
 						    <div class="pic">
-						        <a href="http://www.douban.com/people/akiaki/"><img src="http://img3.douban.com/icon/u1990157-6.jpg" alt="秋秋"></a>
+						        <a href="http://www.douban.com/people/akiaki/"><img src="<@s.url value="/img/user"/>/${userPic}" alt="${userNickName}"></a>
 						    </div>
 						    <div class="content report-comment">
 						        <div class="author">
-						          <a href="http://www.douban.com/people/akiaki/">秋秋</a> 2012-11-21 17:45:33
+						          <a href="http://www.douban.com/people/akiaki/">${userNickName}</a> ${createTime?datetime}
 						        </div>
-						
-						
-						        <p>啊~~~这个！！</p>
-						
+
+                                <@s.if test="replyTo != null">
+                                <div class="reply-quote">
+                                    <span class="short">${replyTo.shortContent}</span>
+                                    <span class="all">${replyTo.content}</span>
+                                    <a href="#" class="toggle-reply">
+                                        <@s.if test="replyTo.shortContent.length() != replyTo.content.length()">
+                                        ...
+                                        </@s.if>
+                                    </a>
+                                    <span class="pubdate"><a href="http://www.douban.com/people/Charlotte666/">${replyTo.userNickName}</a></span>
+                                </div>
+                                </@s.if>
+
+						        <p>${content}</p>
 						        <div class="op-lnks">
 						          <a href="?cid=118902543#add_comment" class="lnk-reply">回应</a>
 						        <div class="comment-report" style="visibility: hidden;"><a rel="nofollow" href="#">举报</a></div></div>
-						
 						        <div class="group_banned">
 						            <span class="gact hidden p_u1990157 p_admin p_intern fright">&gt;
 						                <a rel="nofollow" href="http://www.douban.com/photos/photo/1784781807/remove_comment?cid=118902543" class="j a_confirm_link" title="删除秋秋的发言?">删除</a>
@@ -212,9 +168,8 @@
 						        </div>
 						    </div>
 						</div>
-						
-						    
-						
+                        </@s.iterator>
+
 						<div class="comment-item" id="118902630" data-cid="118902630" data-target_id="1784781807" data-target_kind="1025">
 						    <div class="pic">
 						        <a href="http://www.douban.com/people/bluenilo/"><img src="http://img3.douban.com/icon/u1799911-13.jpg" alt="尼洛"></a>
@@ -844,5 +799,15 @@
 				<div class="extra"></div>
 			</div>
 		</div>
+        <@s.if test="video.fromSite == 'Youku'">
+            <#include "/WEB-INF/pages/video/video-detail-youku.ftl">
+        </@s.if>
+        <@s.elseif test="video.fromSite == 'Tudou'">
+            <#include "/WEB-INF/pages/video/video-detail-tudou.ftl">
+        </@s.elseif>
+        <@s.elseif test="video.fromSite == 'Qiyi'">
+            <#include "/WEB-INF/pages/video/video-detail-qiyi.ftl">
+        </@s.elseif>
+        <script type="text/javascript" src="<@s.url value="/js/video/video-detail.js"/>"></script>
 	</body>
 </html>

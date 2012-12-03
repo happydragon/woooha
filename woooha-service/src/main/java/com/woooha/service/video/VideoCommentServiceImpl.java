@@ -23,4 +23,9 @@ public class VideoCommentServiceImpl implements VideoCommentService {
     public List<VideoComment> findLatestComments(int limit) {
         return videoCommentDao.findLatestComments(limit);
     }
+
+    @Override
+    public List<VideoComment> getLatestComments(int videoId, int limit) {
+        return videoCommentDao.findLatestComments(videoId, limit);
+    }
 }

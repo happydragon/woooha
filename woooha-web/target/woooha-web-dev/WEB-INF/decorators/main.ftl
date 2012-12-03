@@ -9,6 +9,9 @@
 		<title><@decorator.title default="喔哈网"/></title>
 		<link rel="stylesheet" href="<@s.url value="/css/core/packed__init_624267718.css"/>">
 		<link rel="stylesheet" href="<@s.url value="/css/core/packed_site_nav8585901249.css"/>">
+        <script type="text/javascript" src="<@s.url value="/js/core.js"/>"></script>
+        <script type="text/javascript" src="<@s.url value="/js/jquery-1.8.3.min.js"/>"></script>
+        <script type="text/javascript">var contextpath = "${base}";</script>
 		<@decorator.head/>
 	</head>
 	<body>

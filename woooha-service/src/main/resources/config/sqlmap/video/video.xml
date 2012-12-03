@@ -3,6 +3,7 @@
 <sqlMap namespace="Video">
 	<typeAlias alias="Video" type="com.woooha.entity.video.Video" />
 	<typeAlias alias="VideoTag" type="com.woooha.entity.video.VideoTag" />
+	<typeAlias alias="VideoScoreStats" type="com.woooha.entity.video.VideoScoreStats" />
 
 	<resultMap id="VideoResult" class="Video">
 		<result column="ID" property="id"/>
@@ -27,6 +28,12 @@
         <result column="Order" property="order"/>
     </resultMap>
 
+    <resultMap id="VideoScoreStatsResult" class="VideoScoreStats">
+        <result column="VideoID" property="videoId"/>
+        <result column="Score" property="score"/>
+        <result column="Count" property="count"/>
+    </resultMap>
+
 	<select id="findTopHotList" resultMap="VideoResult">
 		<![CDATA[
 		SELECT * FROM video where InTopHotList > 0 ORDER BY InTopHotList DESC
@@ -49,8 +56,19 @@
         <![CDATA[SELECT * FROM video WHERE ID = #id#]]>
     </select>
 
-    <select id="getVideoTags" resultMap="VideoTagResult">
+    <select id="getAllVideoTags" resultMap="VideoTagResult">
         <![CDATA[SELECT * FROM video_tag ORDER BY `Order` DESC]]>
+    </select>
+
+    <select id="getVideoTags" resultMap="VideoTagResult" parameterClass="int">
+        SELECT vt.*
+        FROM video v INNER JOIN video_tag_relation vtr ON v.`ID` = vtr.`VideoID` INNER JOIN video_tag vt ON vt.`ID` = vtr.`TagID`
+        WHERE v.ID = #id#
+        Order by `Order` DESC
+    </select>
+
+    <select id="getScoreStats" resultMap="VideoScoreStatsResult" parameterClass="int">
+        SELECT * FROM video_score_stats WHERE VideoID = #videoId#
     </select>
 
 </sqlMap>

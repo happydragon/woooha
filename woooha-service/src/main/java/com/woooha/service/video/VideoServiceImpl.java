@@ -2,6 +2,7 @@ package com.woooha.service.video;
 
 import com.woooha.dao.VideoDao;
 import com.woooha.entity.video.Video;
+import com.woooha.entity.video.VideoScoreStats;
 import com.woooha.entity.video.VideoTag;
 import com.woooha.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,16 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public Video findById(int id) {
         return videoDao.findById(id);
+    }
+
+    @Override
+    public List<VideoTag> getTags(int videoId) {
+        return videoDao.getTags(videoId);
+    }
+
+    @Override
+    public List<VideoScoreStats> getScoreStats(int videoId) {
+        return videoDao.getScoreStats(videoId);
     }
 
 }

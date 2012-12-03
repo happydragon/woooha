@@ -15,4 +15,5 @@ public interface VideoCommentDao {
 
     List<VideoComment> findLatestComments(int limit);
 
+    List<VideoComment> findLatestComments(int videoId, int limit);
 }

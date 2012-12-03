@@ -1,6 +1,7 @@
 package com.woooha.service;
 
 import com.woooha.entity.video.Video;
+import com.woooha.entity.video.VideoScoreStats;
 import com.woooha.entity.video.VideoTag;
 
 import java.util.List;
@@ -23,4 +24,8 @@ public interface VideoService {
     List<VideoTag> getVideoTags();
 
     Video findById(int id);
+
+    List<VideoTag> getTags(int videoId);
+
+    List<VideoScoreStats> getScoreStats(int videoId);
 }

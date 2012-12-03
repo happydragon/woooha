@@ -14,4 +14,6 @@ import java.util.List;
 public interface VideoCommentService {
 
     List<VideoComment> findLatestComments(int limit);
+
+    List<VideoComment> getLatestComments(int videoId, int limit);
 }

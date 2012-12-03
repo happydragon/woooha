@@ -2,6 +2,7 @@ package com.woooha.dao.ibatis.video;
 
 import com.woooha.dao.VideoDao;
 import com.woooha.entity.video.Video;
+import com.woooha.entity.video.VideoScoreStats;
 import com.woooha.entity.video.VideoTag;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
@@ -37,8 +38,18 @@ public class VideoIbatisDao extends SqlMapClientDaoSupport implements VideoDao {
     }
 
     @Override
+    public List<VideoTag> getTags(int videoId) {
+        return getSqlMapClientTemplate().queryForList("Video.getVideoTags", videoId);
+    }
+
+    @Override
+    public List<VideoScoreStats> getScoreStats(int videoId) {
+        return getSqlMapClientTemplate().queryForList("Video.getScoreStats", videoId);
+    }
+
+    @Override
     public List<VideoTag> getVideoTags() {
-        return getSqlMapClientTemplate().queryForList("Video.getVideoTags");
+        return getSqlMapClientTemplate().queryForList("Video.getAllVideoTags");
     }
 
 }

@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>喔哈视频</title>
+		<title>woooha-list</title>
         <#assign woooha=JspTaglibs["/WEB-INF/tld/woooha-tags.tld"]>
 		<#include "/WEB-INF/pages/video/video-index-seg-css.ftl">
 	</head>
@@ -33,7 +33,7 @@
                                             <a onclick="moreurl(this, {from:'mv_a_tl'})" href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">${video.abbrTitle}</a>
                                         </li>
                                         <li class="rating">
-                                                <span class="rating-star allstar${video.userStar}"></span><span class="subject-rate">${video.userScore}</span>
+                                                <span class="rating-star allstar${video.userStar}"></span><span class="subject-rate">${video.userScore?string('0.0')}</span>
                                         </li>
                                     </ul>
                                 </li>
