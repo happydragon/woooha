@@ -1,5 +1,23 @@
-<embed pluginspage="http://www.macromedia.com/go/getflashplayer" loop="true" play="true" quality="hight" scale="showall"
-       devicefont="false" allowfullscreen="true" menu="true" type="application/x-shockwave-flash" width="636"
-       height="513" src="http://www.iqiyi.com/player/20121129103842/Player.swf" id="flash" bgcolor="#000000"
-       flashvars="preLoaderUrl=http://www.iqiyi.com/player/20120911131744/preloader.swf&amp;preloader=http://www.iqiyi.com/player/20120911131744/preloader.swf&amp;coreUrl=http://www.qiyipic.com/1000/fix/cp_2028_pp.jpg&amp;tipdataurl=http://static.qiyi.com/ext/1021/tipdata.xml&amp;components=ffffffe6&amp;vid=a9424753bd394c8da9b5cec89e54343c&amp;pid=2095&amp;ptype=2&amp;albumId=9432&amp;tvId=323000&amp;UUIDDuration=3000&amp;cid=qc_100001_100012&amp;browser=chrome"
-       align="middle" ipad="true" wmode="window" hint="true" allowscriptaccess="always">
+<div class="paginator">
+    <span class="prev">
+        &lt;前页
+    </span>
+    <span class="thispage">1</span>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=25">2</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=50">3</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=75">4</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=100">5</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=125">6</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=150">7</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=175">8</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=200">9</a>
+    <span class="break">...</span>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=550">23</a>
+    <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=575">24</a>
+    <span class="next">
+        <link rel="next" href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=25">
+        <a href="http://book.douban.com/subject/4714734/reviews?score=&amp;start=25">后页&gt;</a>
+    </span>
+
+    <span class="count">(共580条)</span>
+</div>

@@ -18,12 +18,12 @@ public class Video implements Serializable {
     private float score;
     private String comment;
     private float userScore;
+    private int userScoreCount;
     private int recommendCount;
     private int categoryId;
     private String pic;
     private String url;
     private String fromSite;
-    private int commentCount;
     private int inTopHotList;
     private Date createTime;
 
@@ -119,12 +119,12 @@ public class Video implements Serializable {
         this.fromSite = fromSite;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public int getUserScoreCount() {
+        return userScoreCount;
     }
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
+    public void setUserScoreCount(int userScoreCount) {
+        this.userScoreCount = userScoreCount;
     }
 
     public Date getCreateTime() {

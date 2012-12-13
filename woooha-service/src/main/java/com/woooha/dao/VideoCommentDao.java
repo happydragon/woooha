@@ -1,5 +1,6 @@
 package com.woooha.dao;
 
+import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.VideoComment;
 
 import java.util.List;
@@ -16,4 +17,10 @@ public interface VideoCommentDao {
     List<VideoComment> findLatestComments(int limit);
 
     List<VideoComment> findLatestComments(int videoId, int limit);
+
+    long getCommentCount(int videoId);
+
+    List<VideoComment> getCommentList(int videoId, Paginater<VideoComment> paginater);
+
+    void create(VideoComment comment);
 }

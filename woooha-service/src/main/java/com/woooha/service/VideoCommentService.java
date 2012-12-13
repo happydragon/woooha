@@ -1,5 +1,6 @@
 package com.woooha.service;
 
+import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.VideoComment;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface VideoCommentService {
     List<VideoComment> findLatestComments(int limit);
 
     List<VideoComment> getLatestComments(int videoId, int limit);
+
+    Paginater<VideoComment> paginateComments(int videoId, Paginater<VideoComment> paginater);
+
+    void create(VideoComment comment);
 }

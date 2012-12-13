@@ -4,3 +4,5 @@
 
 TODO:
     a. 消除页面中的onclick="moreurl(this, {from:'mv_l_tg'})"函数调用，以Google Analytics替换
+    b. 很多操作需要判断用户是否登录(前后端都需要)，防止被数据攻击
+    3. 加缓存

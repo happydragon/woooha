@@ -46,6 +46,7 @@
         <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/aspectj/aspectjrt/1.6.8/aspectjrt-1.6.8.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/aspectj/aspectjweaver/1.6.7/aspectjweaver-1.6.7.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/easymock/easymock/2.5.2/easymock-2.5.2.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/eclipse/jdt/core/3.1.1/core-3.1.1.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/freemarker/freemarker/2.3.15/freemarker-2.3.15.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/slf4j/jcl-over-slf4j/1.5.11/jcl-over-slf4j-1.5.11.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/jian.liu/.m2/repository/org/slf4j/slf4j-api/1.5.11/slf4j-api-1.5.11.jar</webClassPathEntry>

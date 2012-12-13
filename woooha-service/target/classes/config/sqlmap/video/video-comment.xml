@@ -31,6 +31,7 @@
     
     <resultMap id="VideoCommentResult2" class="VideoComment" extends="VideoCommentResult">
         <result resultMap="VideoComment.VideoReplyedCommentFullResult" column="ReplyTo" property="replyTo"/>
+        <result column="ReplyTo" property="replyToId"/>
     </resultMap>
 
     <resultMap id="VideoCommentFullResult2" class="VideoComment" extends="VideoCommentResult2">
@@ -47,8 +48,27 @@
 		LIMIT #limit#
 		]]>
     </select>
-    
-    <select id="findLatestVideoComments" resultMap="VideoCommentFullResult2" parameterClass="map">
+
+    <select id="getCommentCount" parameterClass="int" resultClass="long">
+        SELECT COUNT(*) FROM video_comment WHERE VideoID = #videoId#
+    </select>
+
+    <select id="getCommentList" parameterClass="map" resultMap="VideoCommentFullResult2">
+        SELECT vc.*, u.NickName AS UserNickName, u.Pic AS UserPic, rvc.ID as RID, rvc.VideoID as RVideoID,
+		        rvc.UserID as RUserID, rvc.Content as RContent, ru.NickName as RUserNickName
+		FROM video_comment vc LEFT JOIN `user` u ON vc.UserID = u.ID
+		  LEFT JOIN video_comment rvc ON vc.ReplyTo = rvc.ID LEFT JOIN `user` ru ON rvc.UserID = ru.ID
+		WHERE vc.VideoID = #videoId#
+		ORDER BY vc.CreateTime DESC
+		LIMIT #paginater.firstResult#, #paginater.maxResults#
+    </select>
+
+    <insert id="insertComment" parameterClass="VideoComment">
+        INSERT INTO video_comment(VideoID, UserID, Content, ReplyTo, CreateTime)
+        VALUES(#videoId#, #userId#, #content#, #replyToId#, NOW())
+    </insert>
+
+    <!--select id="findLatestVideoComments" resultMap="VideoCommentFullResult2" parameterClass="map">
         <![CDATA[
 		SELECT vc.*, u.NickName AS UserNickName, u.Pic AS UserPic, rvc.ID as RID, rvc.VideoID as RVideoID,
 		        rvc.UserID as RUserID, rvc.Content as RContent, ru.NickName as RUserNickName
@@ -58,6 +78,6 @@
 		ORDER BY vc.CreateTime DESC
 		LIMIT #limit#
 		]]>
-    </select>
+    </select-->
 
 </sqlMap>

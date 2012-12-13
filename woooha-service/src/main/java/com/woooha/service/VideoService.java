@@ -1,5 +1,6 @@
 package com.woooha.service;
 
+import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.Video;
 import com.woooha.entity.video.VideoScoreStats;
 import com.woooha.entity.video.VideoTag;
@@ -17,7 +18,12 @@ public interface VideoService {
 
     List<Video> findTopHotVideos();
 
-    List<Video> findTopRecommendVideos(int limit);
+    /**
+     * 一周推荐top视频
+     * @param limit
+     * @return
+     */
+    List<Video> findLatestRecommendVideos(int limit);
 
     List<Video> findTopNewVideos(int limit);
 
@@ -28,4 +34,18 @@ public interface VideoService {
     List<VideoTag> getTags(int videoId);
 
     List<VideoScoreStats> getScoreStats(int videoId);
+
+    void score(int videoId, int userId, int score);
+
+    Integer getUserScore(int videoId, int userId);
+
+    void recommend(int videoId, int userId);
+
+    void unrecommend(int videoId, int userId);
+
+    boolean hasRecommended(int videoId, Integer userId);
+
+    VideoTag getTag(int tagId);
+
+    Paginater<Object> paginateVideos(VideoCriteria criteria, Paginater<Object> paginater);
 }

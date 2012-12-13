@@ -3,7 +3,10 @@
 <sqlMap namespace="Video">
 	<typeAlias alias="Video" type="com.woooha.entity.video.Video" />
 	<typeAlias alias="VideoTag" type="com.woooha.entity.video.VideoTag" />
+	<typeAlias alias="VideoScore" type="com.woooha.entity.video.VideoScore" />
 	<typeAlias alias="VideoScoreStats" type="com.woooha.entity.video.VideoScoreStats" />
+    <typeAlias alias="VideoRecommend" type="com.woooha.entity.video.VideoRecommend" />
+    <typeAlias alias="VideoCriteria" type="com.woooha.service.VideoCriteria" />
 
 	<resultMap id="VideoResult" class="Video">
 		<result column="ID" property="id"/>
@@ -12,12 +15,12 @@
 		<result column="Score" property="score"/>
 		<result column="Comment" property="comment"/>
 		<result column="UserScore" property="userScore"/>
-		<result column="RecommendCount" property="recommendCount"/>
-		<result column="CategoryId" property="categoryId"/>
-		<result column="Pic" property="pic"/>
-		<result column="Url" property="url"/>
-		<result column="FromSite" property="fromSite"/>
-		<result column="CommentCount" property="commentCount"/>
+        <result column="UserScoreCount" property="userScoreCount"/>
+        <result column="RecommendCount" property="recommendCount"/>
+        <result column="CategoryId" property="categoryId"/>
+        <result column="Pic" property="pic"/>
+        <result column="Url" property="url"/>
+        <result column="FromSite" property="fromSite"/>
 		<result column="InTopHotList" property="inTopHotList"/>
 		<result column="CreateTime" property="createTime"/>
 	</resultMap>
@@ -34,16 +37,39 @@
         <result column="Count" property="count"/>
     </resultMap>
 
-	<select id="findTopHotList" resultMap="VideoResult">
-		<![CDATA[
-		SELECT * FROM video where InTopHotList > 0 ORDER BY InTopHotList DESC
+    <resultMap id="VideoScoreResult" class="VideoScore">
+        <result column="UserID" property="userId"/>
+        <result column="VideoID" property="videoId"/>
+        <result column="Score" property="score"/>
+        <result column="CreateTime" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="VideoRecommendResult" class="VideoRecommend">
+        <result column="VideoID" property="videoId"/>
+        <result column="UserID" property="userId"/>
+        <result column="CreateTime" property="createTime"/>
+    </resultMap>
+
+    <select id="findLatestRecommendList" resultClass="int" parameterClass="map">
+        <![CDATA[
+        SELECT VideoID
+        FROM video_daily_recommend
+        WHERE RecommendDate BETWEEN #from# AND #to#
+        GROUP BY VideoID
+        ORDER BY SUM(RecommendCount) DESC
+        LIMIT #limit#
 		]]>
     </select>
 
-    <select id="findTopRecommendList" resultMap="VideoResult" parameterClass="int">
-        <![CDATA[
-		SELECT * FROM video ORDER BY RecommendCount DESC LIMIT #limit#
-		]]>
+    <select id="findTopRecommendVideos" resultMap="VideoResult" parameterClass="map">
+        SELECT *
+        FROM video
+        WHERE 1 = 1
+        <isNotEmpty prepend="AND" property="excludeIds">
+            ID NOT IN <iterate property="excludeIds" open="(" close=")" conjunction=",">#excludeIds[]#</iterate>
+        </isNotEmpty>
+        ORDER BY RecommendCount
+        LIMIT #limit#
     </select>
 
     <select id="findTopNewVideos" resultMap="VideoResult" parameterClass="int">
@@ -52,9 +78,31 @@
 		]]>
     </select>
 
+	<select id="findTopHotList" resultMap="VideoResult">
+		<![CDATA[
+		SELECT * FROM video where InTopHotList > 0 ORDER BY InTopHotList DESC
+		]]>
+    </select>
+
     <select id="findById" resultMap="VideoResult" parameterClass="int">
         <![CDATA[SELECT * FROM video WHERE ID = #id#]]>
     </select>
+
+    <select id="findByIds" resultMap="VideoResult" parameterClass="list">
+        SELECT * FROM video WHERE ID IN <iterate open="(" close=")" conjunction=",">#[]#</iterate>
+    </select>
+
+    <update id="updateUserScore" parameterClass="map">
+        UPDATE video SET UserScore = #score# WHERE ID = #videoId#
+    </update>
+
+    <update id="incrUserScoreCount" parameterClass="int">
+        UPDATE video SET UserScoreCount = UserScoreCount + 1 WHERE ID = #videoId#
+    </update>
+
+    <update id="incrRecommendCount" parameterClass="map">
+        UPDATE video SET RecommendCount = RecommendCount + (#increment#) WHERE ID = #videoId#
+    </update>
 
     <select id="getAllVideoTags" resultMap="VideoTagResult">
         <![CDATA[SELECT * FROM video_tag ORDER BY `Order` DESC]]>
@@ -67,8 +115,83 @@
         Order by `Order` DESC
     </select>
 
+    <!--这里需要将title的匹配使用全文检索完成，如Lucene-->
+    <select id="getVideoCount" resultClass="long" parameterClass="VideoCriteria">
+        SELECT COUNT(DISTINCT v.ID) FROM video v LEFT JOIN video_tag_relation vtr ON v.`ID` = vtr.`VideoID`
+        WHERE 1 = 1
+        <isNotNull property="tagId">
+            AND vtr.`TagID` = #tagId#
+        </isNotNull>
+        <isNotEmpty property="title">
+            AND (v.Title LIKE CONCAT('%', #title#, '%') OR v.AbbrTitle LIKE CONCAT('%', #title#, '%'))
+        </isNotEmpty>
+    </select>
+
+    <select id="getVideoList" resultMap="VideoResult" parameterClass="map">
+        SELECT DISTINCT v.* FROM video v LEFT JOIN video_tag_relation vtr ON v.`ID` = vtr.`VideoID`
+        WHERE 1 = 1
+        <isNotNull property="criteria.tagId">
+            AND vtr.`TagID` = #criteria.tagId#
+        </isNotNull>
+        <isNotEmpty property="criteria.title">
+            AND (v.Title LIKE CONCAT('%', #criteria.title#, '%') OR v.AbbrTitle LIKE CONCAT('%', #criteria.title#, '%'))
+        </isNotEmpty>
+        ORDER BY v.$paginater.sortField$ $paginater.sortType$
+        LIMIT #paginater.firstResult#, #paginater.maxResults#
+    </select>
+
+    <select id="getTagById" resultMap="VideoTagResult" parameterClass="int">
+        SELECT * FROM video_tag WHERE ID = #tagId#
+    </select>
+
     <select id="getScoreStats" resultMap="VideoScoreStatsResult" parameterClass="int">
         SELECT * FROM video_score_stats WHERE VideoID = #videoId#
+    </select>
+
+    <select id="findScore" parameterClass="map" resultMap="VideoScoreResult">
+        SELECT * FROM video_score WHERE UserID = #userId# AND VideoID = #videoId#
+    </select>
+
+    <update id="updateScore" parameterClass="map">
+        UPDATE video_score SET Score = #score#, CreateTime = NOW() WHERE UserID = #userId# AND VideoID = #videoId#
+    </update>
+
+    <insert id="insertScore" parameterClass="map">
+        INSERT INTO video_score(UserID, VideoID, Score, CreateTime) VALUES(#userId#, #videoId#, #score#, NOW())
+    </insert>
+
+    <select id="getScoreByUser" parameterClass="map" resultClass="int">
+        SELECT Score FROM video_score WHERE UserID = #userId# AND VideoID = #videoId#
+    </select>
+
+    <update id="decrScoreStats" parameterClass="map">
+        UPDATE video_score_stats SET `Count` = `Count` - 1 WHERE VideoID = #videoId# AND Score = #score#
+    </update>
+
+    <update id="incrScoreStats" parameterClass="map">
+        INSERT INTO video_score_stats(VideoID, Score, `Count`) VALUES(#videoId#, #score#, 1)
+        ON DUPLICATE KEY UPDATE `Count` = `Count` + 1
+    </update>
+
+    <update id="incrDailyRecommendCount" parameterClass="map">
+        INSERT INTO video_daily_recommend(VideoID, RecommendDate, RecommendCount) VALUES(#videoId#, #date#, #increment#)
+        ON DUPLICATE KEY UPDATE RecommendCount = RecommendCount + (#increment#)
+    </update>
+
+    <select id="getAvgScoreFromStats" parameterClass="int" resultClass="java.lang.Float">
+        SELECT SUM(Score * `Count`) / SUM(`Count`) FROM video_score_stats WHERE VideoID = #videoId#
+    </select>
+
+    <insert id="insertRecommend" parameterClass="VideoRecommend">
+        INSERT IGNORE INTO video_recommend(VideoID, UserID, CreateTime) VALUES(#videoId#, #userId#, NOW())
+    </insert>
+
+    <delete id="deleteRecommend" parameterClass="map">
+        DELETE FROM video_recommend WHERE VideoID = #videoId# AND UserID = #userId#
+    </delete>
+
+    <select id="getVideoRecommend" parameterClass="map" resultMap="VideoRecommendResult">
+        SELECT * FROM video_recommend WHERE VideoID = #videoId# AND UserID = #userId#
     </select>
 
 </sqlMap>

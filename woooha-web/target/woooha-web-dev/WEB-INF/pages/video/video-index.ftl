@@ -1,7 +1,6 @@
 <html>
 	<head>
 		<title>woooha-list</title>
-        <#assign woooha=JspTaglibs["/WEB-INF/tld/woooha-tags.tld"]>
 		<#include "/WEB-INF/pages/video/video-index-seg-css.ftl">
 	</head>
 	<body>
@@ -10,49 +9,57 @@
 			<div class="grid-16-8 clearfix">
 				<div class="article">
 					<div id="dale_movie_home_main_top"></div>
+
+                    <#--
+                    <script id="db-tmpl-subject-tip" type="text/x-jquery-tmpl">
+                        <div id="subject-tip">
+                            <div class="subject-tip-hd">
+                                <h3>{{= title}}</h3>
+                            </div>
+                            <div class="subject-tip-bd">
+                                {{if intro}}
+                                <div class="">
+                                    {{= intro}}
+                                </div>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </script>
+                    -->
+
 					<div id="screening">
 					    <div class="screening-hd">
 					        <div class="ui-slide-control">
-					            <span class="prev-btn"><a class="btn-prev" href="javascript:void(0)"></a></span>
+					            <span class="prev-btn"><a class="btn-prev btn-disabled" href="javascript:void(0)"></a></span>
 					            <span class="next-btn"><a class="btn-next" href="javascript:void(0)"></a></span>
 					        </div>
-					        <div class="slide-tip"><span class="ui-slide-index">2</span> / <span class="ui-slide-max">6</span></div>
-					        <h2>最新推荐<span><a onclick="moreurl(this, {from:'mv_l_a'})" href="./nowplaying/">谁推荐了这些»</a></span><span><!--a onclick="moreurl(this, {from:'mv_l_w'})" href="./later/">即将上映»</a></span--></h2>
+					        <div class="slide-tip"><span class="ui-slide-index">1</span> / <span class="ui-slide-max">6</span></div>
+					        <h2>
+                                最新推荐<span><a onclick="moreurl(this, {from:'mv_l_a'})" href="./nowplaying/">推荐排行榜»</a></span><span>
+                            </h2>
 					    </div>
-					    <div class="screening-bd">
-					        <ul class="ui-slide-content" data-slide-index="1" data-index-max="9" style="left: 0px;"><!-- -608px; -->
+					    <div class="screening-bd" id="slide-plane">
+					        <ul class="ui-slide-content" data-slide-index="1" data-index-max="9" data-left="0" style="left: 0px;"><!-- -608px; -->
                                 <@s.iterator value="recommendVideos" var="videoVo" status="videoStat">
-                                <li class="ui-slide-item" data-title="${video.abbrTitle}">
-                                    <ul>
-                                        <li class="poster">
-                                            <a onclick="moreurl(this, {from:'mv_a_pst'})" href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">
-                                                <img src="<@s.url value="/img/video"/>/${video.pic}" alt="2012 3D" rel="nofollow">
-                                            </a>
-                                        </li>
-                                        <li class="title">
-                                            <a onclick="moreurl(this, {from:'mv_a_tl'})" href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">${video.abbrTitle}</a>
-                                        </li>
-                                        <li class="rating">
-                                                <span class="rating-star allstar${video.userStar}"></span><span class="subject-rate">${video.userScore?string('0.0')}</span>
-                                        </li>
-                                    </ul>
-                                </li>
+                                    <li class="ui-slide-item" data-title="${video.title}" data-star="40" data-rate="7.5" data-rater="150" data-intro="${video.comment?if_exists}">
+                                        <ul>
+                                            <li class="poster">
+                                                <a onclick="moreurl(this, {from:'mv_a_pst'})" href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">
+                                                    <img src="<@s.url value="/img/video"/>/${video.pic}" alt="2012 3D" rel="nofollow">
+                                                </a>
+                                            </li>
+                                            <li class="title">
+                                                <a onclick="moreurl(this, {from:'mv_a_tl'})" href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">${video.abbrTitle}</a>
+                                            </li>
+                                            <li class="rating">
+                                                    <span class="rating-star allstar${video.userStar}"></span><span class="subject-rate">${video.userScore?string('0.0')}</span>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </@s.iterator>
-                                <!-- 需要补满整格滚动屏 -->
-                                <!--
-					               <li class="ui-slide-item" data-title="2012 3D" data-release="2009" data-rate="7.6" data-star="40" data-trailer="http://movie.douban.com/subject/3005875/trailer" data-ticket="http://movie.douban.com/subject/3005875/cinema/" data-duration="158分钟" data-region="美国" data-director="Roland" data-actors="约翰·库萨克 切瓦特·埃加福特 阿曼达·皮特" data-intro="2012欢迎来到中国。" data-enough="True" data-rater="191034">
-					                   <ul>
-					                       <li class="poster"><a onclick="moreurl(this, {from:'mv_a_pst'})" href="http://movie.douban.com/subject/3005875/"><img src="http://img3.douban.com/lpic/s3964805.jpg" alt="2012 3D" rel="nofollow"></a></li>
-					                       <li class="title">
-					                           <a onclick="moreurl(this, {from:'mv_a_tl'})" href="http://movie.douban.com/subject/3005875/">2012 3D...</a>
-					                       </li>
-					                       <li class="rating">
-					                               <span class="rating-star allstar40"></span><span class="subject-rate">7.6</span>
-					                       </li>
-					                   </ul>
-					               </li>
-					               <li class="ui-slide-item"></li>
-					            -->
+                                <@s.iterator value="(24 - recommendVideos.size).{#this}" status="stat">
+                                    <li class="ui-slide-item"></li>
+                                </@s.iterator>
 					        </ul>
 					    </div>
 					</div>
@@ -121,12 +128,14 @@
 				<div class="aside">
                     <div id="subject-tags">
                         <div class="subject-tags-hd">
-                            <h2>视频分类<!--span><a onclick="moreurl(this, {from:'mv_l_atg'})" href="http://movie.douban.com/tag/?view=type">所有分类»</a></span--></h2>
+                            <h2>视频标签<!--span><a onclick="moreurl(this, {from:'mv_l_atg'})" href="http://movie.douban.com/tag/?view=type">所有分类»</a></span--></h2>
                         </div>
                         <div class="subject-tags-hd">
                             <ul class="tags-list">
                                 <@s.iterator value="videoTags">
-                                    <li class="list-item"><a onclick="moreurl(this, {from:'mv_l_tg'})" href="http://movie.douban.com/tag/${name}">${name}</a></li>
+                                    <li class="list-item">
+                                        <a onclick="moreurl(this, {from:'mv_l_tg'})" href="<@s.url value="/video/videoListByTag.vhtml"/>?tagId=${id}">${name}</a>
+                                    </li>
                                 </@s.iterator>
                             </ul>
                         </div>
@@ -144,77 +153,27 @@
 										<a href="http://www.douban.com/location/people/amelie_11/drama/">${userNickName}</a>
 									</p>
 									<p class="tip">
-										1小时前评论
+                                        <@s.set name="beforeHours" value="%{#comment.beforeHours}"/>
+                                        <@s.if test="%{#beforeHours > 1 && #beforeHours < 5}"><@s.property value="#beforeHours"/>小时前评论</@s.if>
+                                        <@s.elseif test="%{#beforeHours >= 5}">5小时前评论</@s.elseif>
+                                        <@s.else>1小时内评论</@s.else>
 										<a class="mimic" href="http://www.douban.com/location/drama/20283652/">${videoAbbrTitle}</a>
 										<span class="stars stars${videoUserIntStar}"></span>
 									</p>
-									<p class="comment">${content}</p>
+									<p class="comment reply-quote">
+                                        <span class="short">${shortContent}</span>
+                                        <span class="all">${content}</span>
+                                        <a href="#" class="toggle-reply"><@s.if test="shortContent.length() != content.length()">...</@s.if></a>
+                                    </p>
 								</div>
 							</li>
                             </@s.iterator>
-                            <!--
-							<li>
-								<a class="ll" tabindex="-1"
-									href="http://www.douban.com/location/people/aliceliang0907/drama/">
-									<img width="48" height="48"
-										src="http://img3.douban.com/icon/u56463119-8.jpg" alt="默片晓">
-								</a>
-								<div class="info">
-									<p class="title">
-										<a href="http://www.douban.com/location/people/aliceliang0907/drama/">默片晓</a>
-									</p>
-									<p class="tip">
-										2小时前评论
-										<a class="mimic" href="http://www.douban.com/location/drama/10863588/">喜剧的忧伤</a>
-										<span class="stars stars4"></span>
-									</p>
-									<p class="comment">一开始，何冰比陈道明更入戏，后来好很多，真是喜欢死何冰了…没有在谢幕各路姑娘们喊道哥我爱你的时候喊上一句何冰我爱你，真是一大憾事啊……
-									</p>
-								</div>
-							</li>
-							<li>
-								<a class="ll" tabindex="-1"
-									href="http://www.douban.com/location/people/3530338/drama/">
-									<img width="48" height="48"
-										src="http://img3.douban.com/icon/u3530338-2.jpg" alt="Iberian">
-								</a>
-								<div class="info">
-									<p class="title">
-										<a href="http://www.douban.com/location/people/3530338/drama/">Iberian</a>
-									</p>
-									<p class="tip">
-										2小时前评论
-										<a class="mimic" href="http://www.douban.com/location/drama/20256960/">冠军季节</a>
-										<span class="stars stars3"></span>
-									</p>
-									<p class="comment">这版阵容可强大了，Chris Noth和Kiefer
-										Sutherland，但是我还是买到了终场5块钱的票，而且没觉得engaging....</p>
-								</div>
-							</li>
-							<li>
-								<a class="ll" tabindex="-1"
-									href="http://www.douban.com/location/people/1562338/drama/">
-									<img width="48" height="48"
-										src="http://img3.douban.com/icon/u1562338-5.jpg" alt="ne">
-								</a>
-								<div class="info">
-									<p class="title">
-										<a href="http://www.douban.com/location/people/1562338/drama/">ne</a>
-									</p>
-									<p class="tip">
-										今天上午评论
-										<a class="mimic" href="http://www.douban.com/location/drama/10540049/">空中花园谋杀案</a>
-										<span class="stars stars3"></span>
-									</p>
-									<p class="comment">没有原来预想的好。虽然音乐很好听，演员表演也很到位，但我还是有些失望。</p>
-								</div>
-							</li>
-                            -->
 						</ul>
 					</div>
 				</div>
 				<div class="extra"></div>
 			</div>
 		</div>
+        <script type="text/javascript" src="<@s.url value="/js/video/video-index.js"/>"></script>
 	</body>
 </html>

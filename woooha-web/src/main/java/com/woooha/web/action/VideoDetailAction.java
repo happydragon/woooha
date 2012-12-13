@@ -3,7 +3,7 @@
  */
 package com.woooha.web.action;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.Video;
 import com.woooha.entity.video.VideoComment;
 import com.woooha.entity.video.VideoScoreStats;
@@ -19,7 +19,7 @@ import java.util.*;
  * @author jian.liu
  */
 @SuppressWarnings("serial")
-public class VideoDetailAction extends ActionSupport {
+public class VideoDetailAction extends AbstractWooohaAction {
 
     @Autowired
     private VideoService videoService;
@@ -28,19 +28,68 @@ public class VideoDetailAction extends ActionSupport {
 
     private int id;
     private Video video;
+    private Integer currentUserScore;
+    private boolean recommend;
+    private boolean recommended;
+    private VideoComment comment;
+    private int score;
     private List<VideoTag> tags;
     private Map<String, VideoScoreStatsVo> scoreStatsMap;
-    private List<VideoComment> comments;
+    private Paginater<VideoComment> commentPaginater = new Paginater<VideoComment>(20);
 
     public String detail() {
         this.video = videoService.findById(id);
         this.tags = videoService.getTags(id);
-        this.comments = videoCommentService.getLatestComments(id, 30);
-        buildScoreStatsMap();
+        this.commentPaginater = videoCommentService.paginateComments(id, commentPaginater);
+        buildScoreStatsInfo();
         return SUCCESS;
     }
 
-    private void buildScoreStatsMap() {
+    public String makeScore() {
+        int userId = 1; //TODO change to current userId
+        videoService.score(id, userId, score);
+        this.video = videoService.findById(id);
+        buildScoreStatsInfo();
+        return SUCCESS;
+    }
+
+    public String recommend() {
+        int userId = 1;
+        if (recommend) {
+            videoService.recommend(id, userId);
+        } else {
+            videoService.unrecommend(id, userId);
+        }
+        this.video = videoService.findById(id);
+        buildScoreStatsInfo();
+        return SUCCESS;
+    }
+
+    public String comments() {
+        this.commentPaginater = videoCommentService.paginateComments(id, commentPaginater);
+        return SUCCESS;
+    }
+
+    public String addComment() {
+        checkComment();
+        comment.setVideoId(id);
+        comment.setUserId(1);   //TODO change to current userId
+        videoCommentService.create(comment);
+        return comments();
+    }
+
+    private void checkComment() {
+        if (comment.getContent().length() > 200) {
+            throw new RuntimeException("评论内容不超过200字.");
+        }
+    }
+
+    private void buildScoreStatsInfo() {
+        Integer userId = 1; //TODO change to current userId
+        if (userId != null) {
+            currentUserScore = videoService.getUserScore(id, userId);
+            recommended = videoService.hasRecommended(id, userId);
+        }
         scoreStatsMap = new HashMap<String, VideoScoreStatsVo>();
         List<VideoScoreStats> statsList = videoService.getScoreStats(id);
         Map<Integer, VideoScoreStats> statsMap = new HashMap<Integer, VideoScoreStats>();
@@ -81,11 +130,51 @@ public class VideoDetailAction extends ActionSupport {
         this.tags = tags;
     }
 
+    public VideoComment getComment() {
+        return comment;
+    }
+
+    public void setComment(VideoComment comment) {
+        this.comment = comment;
+    }
+
     public Map<String, VideoScoreStatsVo> getScoreStatsMap() {
         return scoreStatsMap;
     }
 
-    public List<VideoComment> getComments() {
-        return comments;
+    public Paginater<VideoComment> getCommentPaginater() {
+        return commentPaginater;
+    }
+
+    public void setCommentPaginater(Paginater<VideoComment> commentPaginater) {
+        this.commentPaginater = commentPaginater;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public Integer getCurrentUserScore() {
+        return currentUserScore;
+    }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
+    }
+
+    public boolean isRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(boolean recommend) {
+        this.recommend = recommend;
     }
 }

@@ -1,6 +1,7 @@
 package com.woooha.entity.video;
 
 import com.woooha.util.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class VideoComment implements Serializable {
     private String userPic;
     private String userNickName;
     private String content;
+    private Integer replyToId;
     private VideoComment replyTo;
     private Date createTime;
 
@@ -69,6 +71,11 @@ public class VideoComment implements Serializable {
         this.createTime = createTime;
     }
 
+    public int getBeforeHours() {
+        long ms = new Date().getTime() - createTime.getTime();
+        return (int) (ms / 3600000);
+    }
+
     public String getVideoAbbrTitle() {
         return videoAbbrTitle;
     }
@@ -103,6 +110,14 @@ public class VideoComment implements Serializable {
 
     public void setReplyTo(VideoComment replyTo) {
         this.replyTo = replyTo;
+    }
+
+    public Integer getReplyToId() {
+        return replyToId;
+    }
+
+    public void setReplyToId(Integer replyToId) {
+        this.replyToId = replyToId;
     }
 
     public String getUserNickName() {

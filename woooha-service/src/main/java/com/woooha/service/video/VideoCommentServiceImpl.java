@@ -1,6 +1,7 @@
 package com.woooha.service.video;
 
 import com.woooha.dao.VideoCommentDao;
+import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.VideoComment;
 import com.woooha.service.VideoCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,19 @@ public class VideoCommentServiceImpl implements VideoCommentService {
     @Override
     public List<VideoComment> getLatestComments(int videoId, int limit) {
         return videoCommentDao.findLatestComments(videoId, limit);
+    }
+
+    @Override
+    public Paginater<VideoComment> paginateComments(int videoId, Paginater<VideoComment> paginater) {
+        long commentCount = videoCommentDao.getCommentCount(videoId);
+        List<VideoComment> commentList = videoCommentDao.getCommentList(videoId, paginater);
+        paginater.setTotalCount(commentCount);
+        paginater.setResults(commentList);
+        return paginater;
+    }
+
+    @Override
+    public void create(VideoComment comment) {
+        videoCommentDao.create(comment);
     }
 }

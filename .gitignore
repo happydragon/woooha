@@ -8,4 +8,10 @@
 .idea/
 .settings/
 .project
+.classpath
+.#webclasspath
+.tomcatplugin
 *.iml
+
+target/
+work/

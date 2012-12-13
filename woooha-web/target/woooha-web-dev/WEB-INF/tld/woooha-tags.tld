@@ -7,6 +7,7 @@
 	<short-name>woooha</short-name>
 	<uri>/woooha-tags</uri>
 	<tag>
+        <!-- remove me! -->
 		<name>ScoreStar</name>
 		<tag-class>com.woooha.web.tag.StarTag</tag-class>
 		<body-content>empty</body-content>

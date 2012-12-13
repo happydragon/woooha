@@ -7,11 +7,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><@decorator.title default="喔哈网"/></title>
-		<link rel="stylesheet" href="<@s.url value="/css/core/packed__init_624267718.css"/>">
-		<link rel="stylesheet" href="<@s.url value="/css/core/packed_site_nav8585901249.css"/>">
         <script type="text/javascript" src="<@s.url value="/js/core.js"/>"></script>
         <script type="text/javascript" src="<@s.url value="/js/jquery-1.8.3.min.js"/>"></script>
+        <script type="text/javascript" src="<@s.url value="/js/jquery.tmpl.min.js"/>"></script>
         <script type="text/javascript">var contextpath = "${base}";</script>
+        <link rel="stylesheet" href="<@s.url value="/css/core/packed__init_624267718.css"/>">
+        <link rel="stylesheet" href="<@s.url value="/css/core/packed_site_nav8585901249.css"/>">
 		<@decorator.head/>
 	</head>
 	<body>
@@ -38,21 +39,6 @@
 						<li>
 							<a href="http://www.douban.com/">喔哈社区</a>
 						</li>
-						<!--
-						<li class="top-nav-more">
-						    <div class="top-nav-more-items">
-						        <a href="#more" class="more">更多 <span class="arrow">&nbsp;</span>&nbsp;</a>
-						        <ul>
-						        
-						        <li><a href="http://9.douban.com" target="_blank">更多1</a></li>
-						        
-						        <li><a href="http://alphatown.com" target="_blank">更多2</a></li>
-						        
-						        <li><a href="http://www.douban.com/mobile/" target="_blank">更多3</a></li>
-						        </ul>
-						    </div>
-						</li>
-						-->
 					</ul>
 				</div>
 			</div>

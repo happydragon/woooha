@@ -1,0 +1,3 @@
+<style type="text/css">
+    .nav-srh .inp{position:relative;z-index:40}#search_suggest{background:#fff;border:1px solid #ddd;position:absolute;z-index:99;top:32px;width:302px;border-top:0 none}#search_suggest li{border-bottom:1px solid #eee;overflow:hidden}#search_suggest li:last-child{border-bottom:0 none}#search_suggest li.curr_item{background:#efefef}#search_suggest li a{color:#999;display:block;overflow:hidden;padding:6px;zoom:1}#search_suggest li a:hover{background:#f9f9f9;color:#999}#search_suggest li a em{font-style:normal;color:#369}#search_suggest li p{margin:0;zoom:1;overflow:hidden}#search_suggest li img{float:left;margin-right:8px;margin-top:3px}#search_suggest li.over{background:#fbfbfb}
+</style>

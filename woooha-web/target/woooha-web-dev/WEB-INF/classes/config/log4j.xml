@@ -65,13 +65,13 @@
 	</appender>
 	
 	<logger name="com.ibatis" additivity="false">
-		<level value="WARN" />
+		<level value="INFO" />
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="ibatisAppender" />
 	</logger>
 
 	<logger name="java.sql">
-		<level value="WARN" />
+		<level value="INFO" />
 	</logger>
 	
 	<logger name="org.apache.struts2">
