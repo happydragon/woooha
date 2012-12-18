@@ -1,6 +1,7 @@
 package com.woooha.web.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +18,17 @@ import java.io.UnsupportedEncodingException;
  * Time: 下午2:10
  * To change this template use File | Settings | File Templates.
  */
-public class AbstractWooohaAction extends ActionSupport implements ServletRequestAware {
+public class AbstractWooohaAction extends ActionSupport implements ServletRequestAware, Preparable {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     protected HttpServletRequest request;
     protected InputStream inputStream;
+    private String module;
+
+    public AbstractWooohaAction(String module) {
+        this.module = module;
+    }
 
     protected void createStreamResponse(String content) {
         try {
@@ -31,6 +37,10 @@ public class AbstractWooohaAction extends ActionSupport implements ServletReques
             //never be here
             throw new RuntimeException("Create content inputstream[response fetch content from] failed.", e);
         }
+    }
+
+    @Override
+    public void prepare() throws Exception {
     }
 
     protected String ajaxSucceedResult() {
@@ -50,4 +60,9 @@ public class AbstractWooohaAction extends ActionSupport implements ServletReques
     public void setInputStream(InputStream inputStream) {
         this.inputStream = inputStream;
     }
+
+    public String getModule() {
+        return module;
+    }
+
 }

@@ -1,6 +1,6 @@
 <html>
 	<head>
-        <#setting datetime_format="yyyy-MM-dd HH:mm:ss"/>
+        <#setting date_format="yyyy-MM-dd"/>
 		<title>${video.title}</title>
 		<style type="text/css">
 			.suggest-overlay{position:absolute;z-index:10001;width:auto;background:#fff;border:1px solid #c5c7d2;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.suggest-overlay .bd{min-width:220px;line-height:1;background:#fafafa;color:#b3b3b3;padding:5px;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.suggest-overlay ul{color:#333;padding:3px 0;min-width:214px}.suggest-overlay li{margin:0;padding:0}.suggest-overlay li b{font-weight:bold}.suggest-overlay li span{color:#999}.suggest-overlay img{margin-right:5px;width:20px;height:20px;vertical-align:middle}.suggest-overlay li.on{background:#e9f0f8}.suggest-overlay li a{display:block;padding:3px 7px;color:#333}.suggest-overlay li a:hover,.suggest-overlay li a:focus,.suggest-overlay li a:active{outline:0;color:#333;background:0;background:#e9f0f8}
@@ -35,12 +35,10 @@
 		            <!--引导-->
 					<div class="guide">
 						<div class="crumbs">
-							<span id="cateInfo">
-								<a href="#" class="todo" target="_blank" charset="400-02-1">所属标签</a>
-							</span>  
+							<span id="cateInfo">所属标签</span>
 							&gt;
                             <@s.iterator value="tags">
-                                <a href="#" class="todo" target="_blank">${name}</a>&nbsp;
+                                <a href="<@s.url value="/video/videoListByTag.vhtml"/>?tagId=${id}">${name}</a>&nbsp;
                             </@s.iterator>
 						</div>
 					</div>

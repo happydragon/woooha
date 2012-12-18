@@ -5,13 +5,11 @@ import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.*;
 import com.woooha.service.VideoCriteria;
 import com.woooha.util.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,6 +47,10 @@ public class VideoIbatisDao extends SqlMapClientDaoSupport implements VideoDao {
         return recommendVideos;
     }
 
+    public List<Video> findTopRecommendVideos(int limit) {
+        return findTopRecommendVideos(limit, null);
+    }
+
     private List<Video> findTopRecommendVideos(int limit, List<Integer> excludeIds) {
         return getSqlMapClientTemplate().queryForList("Video.findTopRecommendVideos", Maps.entry("limit", limit)
                 .entry("excludeIds", excludeIds).get());
@@ -71,6 +73,26 @@ public class VideoIbatisDao extends SqlMapClientDaoSupport implements VideoDao {
     @Override
     public List<VideoTag> getTags(int videoId) {
         return getSqlMapClientTemplate().queryForList("Video.getVideoTags", videoId);
+    }
+
+    public Map<Integer, List<VideoTag>> getTags(List<Integer> videoIds) {
+        if (CollectionUtils.isEmpty(videoIds)) {
+            return Collections.emptyMap();
+        }
+        Map<Integer, List<VideoTag>> tagMap = new HashMap<Integer, List<VideoTag>>(videoIds.size());
+        List<Map> results = getSqlMapClientTemplate().queryForList("Video.getVideoTagsIn", videoIds);
+        for (Map result : results) {
+            Integer videoId = (Integer) result.get("VideoID");
+            Integer tagId = (Integer) result.get("TagID");
+            String tagName = (String) result.get("TagName");
+            List<VideoTag> videoTags = tagMap.get(videoId);
+            if (videoTags == null) {
+                videoTags = new ArrayList<VideoTag>();
+                tagMap.put(videoId, videoTags);
+            }
+            videoTags.add(new VideoTag(tagId, tagName));
+        }
+        return tagMap;
     }
 
     @Override

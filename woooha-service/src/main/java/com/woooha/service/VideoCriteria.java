@@ -15,6 +15,14 @@ public class VideoCriteria implements Serializable {
 
     private String title;
 
+    public VideoCriteria(Integer tagId, String title) {
+        this.tagId = tagId;
+        this.title = title;
+    }
+
+    public VideoCriteria() {
+    }
+
     public void setTagId(int tagId) {
         this.tagId = tagId;
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +42,10 @@ public class VideoServiceImpl implements VideoService {
     @Override
     public List<VideoTag> getVideoTags() {
         return videoDao.getVideoTags();
+    }
+
+    public Map<Integer, List<VideoTag>> getTags(List<Integer> videoIds) {
+        return videoDao.getTags(videoIds);
     }
 
     @Override
@@ -130,6 +135,25 @@ public class VideoServiceImpl implements VideoService {
         paginater.setTotalCount(videoCount);
         paginater.setResults(new ArrayList<Object>(videoList));
         return paginater;
+    }
+
+    @Override
+    public List<Video> findTopRecommendVideos(int limit) {
+        return videoDao.findTopRecommendVideos(limit);
+    }
+
+    @Override
+    public void enrichTags(List videos) {
+        if (videos != null && !videos.isEmpty()) {
+            List<Integer> videoIds = new ArrayList<Integer>();
+            for (Object video : videos) {
+                videoIds.add(((Video) video).getId());
+            }
+            Map<Integer, List<VideoTag>> tagMap = getTags(videoIds);
+            for (Object video : videos) {
+                ((Video) video).setTags(tagMap.get(((Video) video).getId()));
+            }
+        }
     }
 
 }

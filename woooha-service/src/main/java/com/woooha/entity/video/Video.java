@@ -2,6 +2,7 @@ package com.woooha.entity.video;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,7 +26,12 @@ public class Video implements Serializable {
     private String url;
     private String fromSite;
     private int inTopHotList;
+    private Integer width;
+    private Integer height;
     private Date createTime;
+
+    //optional
+    private List<VideoTag> tags;
 
     public int getId() {
         return id;
@@ -149,5 +155,29 @@ public class Video implements Serializable {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public List<VideoTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<VideoTag> tags) {
+        this.tags = tags;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }

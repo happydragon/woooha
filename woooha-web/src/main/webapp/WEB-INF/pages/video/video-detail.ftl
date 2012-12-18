@@ -35,12 +35,10 @@
 		            <!--引导-->
 					<div class="guide">
 						<div class="crumbs">
-							<span id="cateInfo">
-								<a href="#" class="todo" target="_blank" charset="400-02-1">所属标签</a>
-							</span>  
+							<span id="cateInfo">所属标签</span>
 							&gt;
                             <@s.iterator value="tags">
-                                <a href="#" class="todo" target="_blank">${name}</a>&nbsp;
+                                <a href="<@s.url value="/video/videoListByTag.vhtml"/>?tagId=${id}">${name}</a>&nbsp;
                             </@s.iterator>
 						</div>
 					</div>

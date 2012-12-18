@@ -22,6 +22,8 @@
         <result column="Url" property="url"/>
         <result column="FromSite" property="fromSite"/>
 		<result column="InTopHotList" property="inTopHotList"/>
+		<result column="Width" property="width"/>
+		<result column="Height" property="height"/>
 		<result column="CreateTime" property="createTime"/>
 	</resultMap>
 
@@ -68,7 +70,7 @@
         <isNotEmpty prepend="AND" property="excludeIds">
             ID NOT IN <iterate property="excludeIds" open="(" close=")" conjunction=",">#excludeIds[]#</iterate>
         </isNotEmpty>
-        ORDER BY RecommendCount
+        ORDER BY RecommendCount DESC
         LIMIT #limit#
     </select>
 
@@ -113,6 +115,12 @@
         FROM video v INNER JOIN video_tag_relation vtr ON v.`ID` = vtr.`VideoID` INNER JOIN video_tag vt ON vt.`ID` = vtr.`TagID`
         WHERE v.ID = #id#
         Order by `Order` DESC
+    </select>
+
+    <select id="getVideoTagsIn" resultClass="java.util.HashMap" parameterClass="list">
+        SELECT vtr.VideoID as VideoID, vt.ID as TagID, vt.Name as TagName
+        FROM video_tag_relation vtr INNER JOIN video_tag vt ON vtr.`TagID` = vt.`ID`
+        WHERE vtr.VideoID IN <iterate open="(" close=")" conjunction=",">#[]#</iterate>
     </select>
 
     <!--这里需要将title的匹配使用全文检索完成，如Lucene-->

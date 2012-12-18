@@ -5,6 +5,7 @@ import com.woooha.entity.video.*;
 import com.woooha.service.VideoCriteria;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +20,8 @@ public interface VideoDao {
 
     List<Video> findLatestRecommendVideos(int limit);
 
+    List<Video> findTopRecommendVideos(int limit);
+
     List<VideoTag> getVideoTags();
 
     List<Video> findTopNewVideos(int limit);
@@ -26,6 +29,8 @@ public interface VideoDao {
     Video findById(int id);
 
     List<VideoTag> getTags(int videoId);
+
+    Map<Integer, List<VideoTag>> getTags(List<Integer> videoIds);
 
     List<VideoScoreStats> getScoreStats(int videoId);
 
@@ -62,4 +67,5 @@ public interface VideoDao {
     long getVideoCount(VideoCriteria criteria);
 
     List<Video> getVideoList(VideoCriteria criteria, Paginater<Object> paginater);
+
 }

@@ -18,5 +18,5 @@
         <@s.else><span class="prev">后页&gt;</span></@s.else>
     </span>
 </@s.if>
-    <span class="count">(${videoPaginater.totalCount}条评论)</span>
+    <span class="count">(共${videoPaginater.totalCount}条)</span>
 </div>

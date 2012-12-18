@@ -21,6 +21,14 @@
         <action name="recommendAjax" class="com.woooha.web.action.VideoDetailAction" method="recommend">
             <result name="success">/WEB-INF/pages/video/video-detail-score.ftl</result>
         </action>
+
+        <action name="recommendList" class="com.woooha.web.action.VideoListAction" method="recommendList">
+            <result name="success">/WEB-INF/pages/video/video-recommendlist.ftl</result>
+        </action>
+
+        <action name="newList" class="com.woooha.web.action.VideoListAction" method="newList">
+            <result name="success">/WEB-INF/pages/video/video-newlist.ftl</result>
+        </action>
 		
 		<action name="videoDetail" class="com.woooha.web.action.VideoDetailAction" method="detail">
 			<result name="success">/WEB-INF/pages/video/video-detail.ftl</result>
@@ -32,6 +40,10 @@
 
         <action name="addCommentAjax" class="com.woooha.web.action.VideoDetailAction" method="addComment">
             <result name="success">/WEB-INF/pages/video/video-detail-comments.ftl</result>
+        </action>
+
+        <action name="videoSearch" class="com.woooha.web.action.VideoSearchAction" method="search">
+            <result name="success">/WEB-INF/pages/video/video-search-results.ftl</result>
         </action>
 		
 	</package>

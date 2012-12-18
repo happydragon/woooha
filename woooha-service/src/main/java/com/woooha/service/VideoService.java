@@ -6,6 +6,7 @@ import com.woooha.entity.video.VideoScoreStats;
 import com.woooha.entity.video.VideoTag;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,6 +30,8 @@ public interface VideoService {
 
     List<VideoTag> getVideoTags();
 
+    Map<Integer, List<VideoTag>> getTags(List<Integer> videoIds);
+
     Video findById(int id);
 
     List<VideoTag> getTags(int videoId);
@@ -48,4 +51,9 @@ public interface VideoService {
     VideoTag getTag(int tagId);
 
     Paginater<Object> paginateVideos(VideoCriteria criteria, Paginater<Object> paginater);
+
+    List<Video> findTopRecommendVideos(int limit);
+
+    void enrichTags(List videos);
+
 }

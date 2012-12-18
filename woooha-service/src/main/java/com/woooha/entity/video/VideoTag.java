@@ -15,6 +15,14 @@ public class VideoTag implements Serializable {
     private String name;
     private int order;
 
+    public VideoTag(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public VideoTag() {
+    }
+
     public int getId() {
         return id;
     }

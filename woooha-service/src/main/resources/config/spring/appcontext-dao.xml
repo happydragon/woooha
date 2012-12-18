@@ -12,6 +12,10 @@
 		<property name="sqlMapClient" ref="Woooha.SqlMapClient"/>
 	</bean>
 
+    <bean id="systemConfigDao" class="com.woooha.dao.ibatis.core.SystemConfigIbatisDao">
+        <property name="sqlMapClient" ref="Woooha.SqlMapClient"/>
+    </bean>
+
 	<bean id="videoDao" class="com.woooha.dao.ibatis.video.VideoIbatisDao">
 		<property name="sqlMapClient" ref="Woooha.SqlMapClient"/>
 	</bean>

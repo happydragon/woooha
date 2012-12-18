@@ -3,10 +3,12 @@
  */
 package com.woooha.web.action;
 
+import com.woooha.Constants;
 import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.Video;
 import com.woooha.entity.video.VideoComment;
 import com.woooha.entity.video.VideoTag;
+import com.woooha.service.SystemConfigService;
 import com.woooha.service.VideoCommentService;
 import com.woooha.service.VideoCriteria;
 import com.woooha.service.VideoService;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jian.liu
@@ -25,49 +28,71 @@ import java.util.List;
 public class VideoListAction extends AbstractWooohaAction {
 
     @Autowired
-    private VideoService videoService;
+    private VideoService            videoService;
     @Autowired
-    private VideoCommentService commentService;
+    private VideoCommentService     commentService;
+    @Autowired
+    private SystemConfigService     systemConfigService;
 
     private int tagId;
     private VideoTag tag;
     private String sortType = "";
 
-    private List<VideoVo> topHotVideos = new ArrayList<VideoVo>();
-    private List<VideoVo> latestVideos = new ArrayList<VideoVo>();
-    private List<VideoVo> recommendVideos = new ArrayList<VideoVo>();
-    private Paginater<Object> videoPaginater = new Paginater<Object>(20);
-    private List<VideoComment> latestComments = new ArrayList<VideoComment>();
-    private List<VideoTag> videoTags = new ArrayList<VideoTag>();
+    private List<VideoVo>           topHotVideos = new ArrayList<VideoVo>();
+    private List<VideoVo>           latestVideos = new ArrayList<VideoVo>();
+    private List<VideoVo>           recommendVideos = new ArrayList<VideoVo>();
+    private Paginater<Object>       videoPaginater = new Paginater<Object>(20);
+    private List<VideoComment>      latestComments = new ArrayList<VideoComment>();
+    private List<VideoTag>          videoTags = new ArrayList<VideoTag>();
+    private List<String>            searchWords = new ArrayList<String>();
+
+    public VideoListAction() {
+        super(Constants.MODULE_VIDEO);
+    }
+
+    @Override
+    public void prepare() throws Exception {
+        this.videoTags = videoService.getVideoTags();
+        this.searchWords = systemConfigService.getListConfig(Constants.CONFIG_VIDEO_SEARCH_WORDS);
+    }
 
     public String index() {
-        List<Video> topHotVideoList = videoService.findTopHotVideos();
-        for (Video video : topHotVideoList) {
-            this.topHotVideos.add(new VideoVo(video));
-        }
-        List<Video> topRecommendVideos = videoService.findLatestRecommendVideos(22);
-        for (Video video : topRecommendVideos) {
-            this.recommendVideos.add(new VideoVo(video));
-        }
+        List<Video> latestRecommendVideos = videoService.findLatestRecommendVideos(22);
+        buildVideo2VideoVo(latestRecommendVideos, this.recommendVideos);
+
         List<Video> latestVideoList = videoService.findTopNewVideos(8);
-        for (Video video : latestVideoList) {
-            this.latestVideos.add(new VideoVo(video));
-        }
+        buildVideo2VideoVo(latestVideoList, this.latestVideos);
+
+        List<Video> topHotVideoList = videoService.findTopHotVideos();
+        buildVideo2VideoVo(topHotVideoList, this.topHotVideos);
+
         this.latestComments = commentService.findLatestComments(8);
-        this.videoTags = videoService.getVideoTags();
 		return SUCCESS;
 	}
 
     public String listByTag() {
         this.tag = videoService.getTag(tagId);
-        VideoCriteria criteria = new VideoCriteria();
-        criteria.setTagId(this.tagId);
+        VideoCriteria criteria = new VideoCriteria(this.tagId, null);
         videoPaginater = videoService.paginateVideos(criteria, withSort(videoPaginater));
         List<Object> videoVos = new ArrayList<Object>();
         for (Object video : videoPaginater.getResults()) {
             videoVos.add(new VideoVo((Video) video));
         }
         videoPaginater.setResults(videoVos);
+        return SUCCESS;
+    }
+
+    public String recommendList() {
+        List<Video> topRecommendVideos = videoService.findTopRecommendVideos(50);
+        videoService.enrichTags(topRecommendVideos);
+        buildVideo2VideoVo(topRecommendVideos, this.recommendVideos);
+        return SUCCESS;
+    }
+
+    public String newList() {
+        List<Video> topNewVideos = videoService.findTopNewVideos(60);
+        videoService.enrichTags(topNewVideos);
+        buildVideo2VideoVo(topNewVideos, this.latestVideos);
         return SUCCESS;
     }
 
@@ -83,6 +108,12 @@ public class VideoListAction extends AbstractWooohaAction {
             videoPaginater.setSortAsc(false);
         }
         return videoPaginater;
+    }
+
+    private void buildVideo2VideoVo(List<Video> videos, List<VideoVo> videoVos) {
+        for (Video video : videos) {
+            videoVos.add(new VideoVo(video));
+        }
     }
 
     public List<VideoVo> getTopHotVideos() {
@@ -139,5 +170,17 @@ public class VideoListAction extends AbstractWooohaAction {
 
     public String getSortType() {
         return sortType;
+    }
+
+    public List<String> getSearchWords() {
+        return searchWords;
+    }
+
+    public void setSearchWords(List<String> searchWords) {
+        this.searchWords = searchWords;
+    }
+
+    public void setSystemConfigService(SystemConfigService systemConfigService) {
+        this.systemConfigService = systemConfigService;
     }
 }

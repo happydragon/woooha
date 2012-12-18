@@ -11,8 +11,8 @@
         <script type="text/javascript" src="<@s.url value="/js/jquery-1.8.3.min.js"/>"></script>
         <script type="text/javascript" src="<@s.url value="/js/jquery.tmpl.min.js"/>"></script>
         <script type="text/javascript">var contextpath = "${base}";</script>
-        <link rel="stylesheet" href="<@s.url value="/css/core/packed__init_624267718.css"/>">
-        <link rel="stylesheet" href="<@s.url value="/css/core/packed_site_nav8585901249.css"/>">
+        <link rel="stylesheet" href="<@s.url value="/css/core/packed__init.css"/>">
+        <link rel="stylesheet" href="<@s.url value="/css/core/packed_site_nav.css"/>">
 		<@decorator.head/>
 	</head>
 	<body>
@@ -24,11 +24,11 @@
 				</div>
 				<div class="top-nav-items">
 					<ul>
-						<li class="on">
+						<li<@s.if test="module == 'video'"> class="on"</@s.if>>
 							<a href="<@s.url value="/video/videoList.vhtml"/>">喔哈视频</a>
 						</li>
-						<li>
-							<a href="http://music.douban.com/">喔哈音乐</a>
+						<li<@s.if test="module == 'music'"> class="on"</@s.if>>
+							<a href="<@s.url value="/music/musicList.vhtml"/>">喔哈音乐</a>
 						</li>
 						<li>
 							<a href="http://www.douban.com/location/">喔哈漫画</a>

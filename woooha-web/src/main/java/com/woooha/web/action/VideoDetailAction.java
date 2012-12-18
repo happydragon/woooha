@@ -3,6 +3,7 @@
  */
 package com.woooha.web.action;
 
+import com.woooha.Constants;
 import com.woooha.entity.core.Paginater;
 import com.woooha.entity.video.Video;
 import com.woooha.entity.video.VideoComment;
@@ -36,6 +37,10 @@ public class VideoDetailAction extends AbstractWooohaAction {
     private List<VideoTag> tags;
     private Map<String, VideoScoreStatsVo> scoreStatsMap;
     private Paginater<VideoComment> commentPaginater = new Paginater<VideoComment>(20);
+
+    public VideoDetailAction() {
+        super(Constants.MODULE_VIDEO);
+    }
 
     public String detail() {
         this.video = videoService.findById(id);

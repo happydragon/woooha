@@ -25,23 +25,6 @@ function bind_cmp_events() {
     }, function() {
         start_auto_slide();
     });
-
-//    $(".ui-slide-item img").hover(function(event) {
-//        _showtip = setTimeout(function() {
-//            $("#subject-tip").remove();
-//            var h = $(event.target), g = h.parents(".ui-slide-item").data(), j = $("#db-tmpl-subject-tip").tmpl(g), i = h.offset(), e = h.width();
-//            j.addClass("screening-tip");
-//            j.css({left:i.left + h.width() + 8, top:i.top}).appendTo($("body")).show();
-//        }, 400);
-//    }, function(event) {
-//        clearTimeout(_showtip);
-//        $("#subject-tip").remove();
-//    });
-//    $(document).unbind("click.removeTip").bind("click.removeTip", function(event) {
-//        if (!$(event.target).parents("#subject-tip").length) {
-//            $("#subject-tip").remove();
-//        }
-//    });
 }
 
 function slide2left() {
@@ -78,7 +61,7 @@ function slide2right() {
 }
 
 function start_auto_slide() {
-    auto_slide_timeout = setTimeout(slide2right, 20000);
+    auto_slide_timeout = setTimeout(slide2right, 15000);
 }
 
 function stop_auto_slide() {
