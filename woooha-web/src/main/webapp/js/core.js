@@ -57,6 +57,17 @@ String.prototype.endWith = function (str) {
     return this.substring(this.length - str.length) == str;
 }
 
+/**
+ * 替换字符串中指定的字符串
+ */
+String.prototype.replaceAll = function(reallyDo, replaceWith, ignoreCase) {
+    if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
+        return this.replace(new RegExp(reallyDo, (ignoreCase ? "gi": "g")), replaceWith);
+    } else {
+        return this.replace(reallyDo, replaceWith);
+    }
+}
+
 String.prototype.toMap = function(sep1, sep2) {
     if (this == void 0) {throw new Error("Illegal argument error.");}
     var segments = this.split(sep1);

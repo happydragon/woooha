@@ -10,9 +10,7 @@
         <div class="article">
             <div>
                 <div id="song-chart" class="song-chart">
-                    <div id="hold-panel" style="width: 590px;height: 99px;">
-
-                    </div>
+                    <div id="hold-panel" style="width: 590px;height: 99px;"></div>
                     <div id="player-panel" style="position: absolute; top:51px;">
                         <h2 class="tabs clearfix">
                         <div class="ll">本周热门单曲</div>
@@ -22,7 +20,7 @@
                         </@s.iterator>
                         <a href="#"><span>更多音乐</span></a>
                         </h2>
-                        <div id="mainplayer"></div>
+                        <div id="mainplayer" style="height: 64px;"></div>
                     </div>
                     <script type="text/javascript">
                         var fix_not_support = $.browser.msie && (eval(parseInt($.browser.version)) <= 6);
@@ -74,6 +72,26 @@
                     </@s.iterator>
                 </div>
             </div>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
+            <p>11</p>
         </div>
         <div class="aside">
             <#include "/WEB-INF/pages/music/music-index-lyric.ftl">
@@ -112,7 +130,7 @@
 //            $lrcPanel.removeClass("lrc-fixed");
 //        }
 //    }
-
+    $(".lrc-wrapper").scrollTop(0);
     $("#song-chart .tabs").delegate("a", "click", function (a) {
         if (this.id) {
             $("#song-chart .tabs a").removeClass("on");
@@ -138,38 +156,7 @@
         del_comment_src:"http://site.douban.com/nanwu/widget/playlist/8577929/delete_song_comment"
     });
 
-    var widget = PlaylistWidget.findOrCreate(8577929),
-        song_records = [
-            {
-                "name":"鬼猫",
-                "url":"aHR0cDovLzE5Mi4xNjguMS41OjM0Nzcvd29vb2hhL3VwbG9hZC9tdXNpYy94MTM5Mzk0MjYubXAz",
-                "cover":"/img/todo/6b71c127d44bcbf.jpg".prependfullcontext(),
-                "isDemo":false,
-                "rawUrl":"/upload/music/x13939426.mp3".prependfullcontext(),
-                "singer":"湖光",
-                "id":"1"
-            },
-            {
-                "name":"全世界最温暖的情歌RemixDewen Feat 拖鞋 （prod by T-Crash）",
-                "url":"aHR0cDovLzE5Mi4xNjguMS41OjM0Nzcvd29vb2hhL3VwbG9hZC9tdXNpYy94MTM4NTA1OTUubXAz",
-                "cover":"/img/todo/2144ad5967a38a6.jpg".prependfullcontext(),
-                "isDemo":false,
-                "rawUrl":"/upload/music/x13850595.mp3".prependfullcontext(),
-                "singer":"Jazzilipper~性感的拖鞋",
-                "id":"2"
-            },
-            {
-                "name":"不知道",
-                "url":"aHR0cDovLzE5Mi4xNjguMS41OjM0Nzcvd29vb2hhL3VwbG9hZC9tdXNpYy94MTM5MTg3MTIubXAz",
-                "cover":"/img/todo/30413ae5d1b9e60.jpg".prependfullcontext(),
-                "isDemo":false,
-                "rawUrl":"/upload/music/x13918712.mp3".prependfullcontext(),
-                "singer":"南无",
-                "id":"3"
-            }
-
-
-        ];
+    var widget = PlaylistWidget.findOrCreate(8577929);
     $(".songrow").each(function() {
         $this = $(this);
         var name = $this.find(".name").text();
@@ -178,10 +165,6 @@
         var song = Song.create($this.data("sid"), name, $this.data("burl"), $this.data("url"), false, cover, singer);
         widget.addSong(song);
     });
-//    $(song_records).each(function () {
-//        var song = Song.create(this.id, this.name, this.url, this.rawUrl, this.isDemo, this.cover, this.singer);
-//        widget.addSong(song);
-//    });
 
     var auto = false;
     var swfurl = ('/swf/~playlist_player.swf?ver=' + 53023).prependcontext(),
@@ -200,7 +183,7 @@
         attributes = {
             id:"mplayer_8577929",
             name:"mplayer_8577929",
-            "class":"playlist_player"
+            "class":"mlplayer"
         };
 
     window.alll = function() {
@@ -210,13 +193,37 @@
             "64", "9.0.0", "/swf/expressInstall.swf", flashvars, params, attributes);
 
     $(".listening-icon").click(function() {
-        alert($("#mplayer_8577929")[0].GetVariable("_channel"));
+//        alert($(".lrc-wrapper li.00\\:50").offset().top - $(".lrc-wrapper").offset().top - 125);
+//        $(".lrc-wrapper").scrollTop(249);
     });
 
-    var times = 0;
     window.changeTime = function(time) {
-//        $("#song-chart-0 .play-count").text(time);
-//        $("#song-chart-0 .play-count1").text(times++);
+        if ($(".lrc-wrapper .no_lyric").length == 0) {
+            var $loc_row, $prev_row, $cur_row, located = false;
+            $(".lrc-wrapper li").each(function() {
+                $prev_row = $cur_row;
+                $cur_row = $(this);
+                var tag = $cur_row.data("tag");
+                if (time < tag) {
+                    located = true;
+                    return false;
+                }
+            });
+            $loc_row = located ? $prev_row : $cur_row;
+            if ($loc_row != null) {
+                var $lrc_wrapper = $(".lrc-wrapper");
+                var top = $loc_row.offset().top + $lrc_wrapper.scrollTop() - $(".lrc-wrapper").offset().top;
+                if (top - 115 > 0) {
+                    $(".lrc-wrapper").animate({scrollTop : top - 115}, 500);
+                } else {
+                    if ($lrc_wrapper.scrollTop() != 0) {
+                        $(".lrc-wrapper").animate({scrollTop : 0}, 400);
+                    }
+                }
+                $(".lrc-wrapper li.curr").removeClass("curr");
+                $loc_row.addClass("curr");
+            }
+        }
     };
 
 //    window.audio_player = new AudioPlayer();
