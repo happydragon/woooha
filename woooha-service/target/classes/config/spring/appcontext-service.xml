@@ -6,5 +6,6 @@
 	<bean id="systemConfigService" class="com.woooha.service.core.SystemConfigServiceImpl"/>
 	<bean id="videoService" class="com.woooha.service.video.VideoServiceImpl"/>
 	<bean id="videoCommentService" class="com.woooha.service.video.VideoCommentServiceImpl"/>
+	<bean id="musicService" class="com.woooha.service.music.MusicServiceImpl"/>
 
 </beans>

@@ -1,6 +1,7 @@
 <html>
     <head>
         <#setting date_format="yyyy-MM-dd"/>
+        <#assign woooha=JspTaglibs["/WEB-INF/tld/woooha-tags.tld"]>
         <title>woooha-list-bytag</title>
         <link rel="stylesheet" href="<@s.url value="/css/core/packed_init2.css"/>">
         <link rel="stylesheet" href="<@s.url value="/css/core/packed__all.css"/>">
@@ -20,7 +21,7 @@
                                 <tr class="item">
                                     <td width="150" valign="top">
                                         <a class="nbg" href="<@s.url value="/video/videoDetail.vhtml?id=${video.id}"/>" title="${video.abbrTitle}">
-                                            <img src="<@s.url value="/img/video"/>/${video.pic}" alt="${video.abbrTitle}">
+                                            <img src="<@woooha.Static resource="${video.pic}"/>" alt="${video.abbrTitle}">
                                         </a>
                                     </td>
                                     <td valign="top">

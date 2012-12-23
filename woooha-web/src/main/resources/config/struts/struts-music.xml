@@ -6,7 +6,7 @@
 
 	<package name="music" namespace="/music" extends="default">
 		
-		<action name="musicList" class="com.woooha.web.action.MusicListAction" method="index">
+		<action name="musicList" class="com.woooha.web.action.music.MusicListAction" method="index">
 			<result name="success">/WEB-INF/pages/music/music-index.ftl</result>
 		</action>
 

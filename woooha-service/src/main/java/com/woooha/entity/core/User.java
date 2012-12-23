@@ -9,9 +9,8 @@ import java.io.Serializable;
  * Time: 下午9:51
  * To change this template use File | Settings | File Templates.
  */
-public class User implements Serializable {
+public class User extends AbstractEntity {
 
-    private int id;
     private String loginId;
     private String passwd;
     private String nickName;
@@ -20,14 +19,6 @@ public class User implements Serializable {
     private int gender;
     private String pic;
     private String message;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getLoginId() {
         return loginId;

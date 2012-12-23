@@ -12,4 +12,27 @@
 		<tag-class>com.woooha.web.tag.StarTag</tag-class>
 		<body-content>empty</body-content>
 	</tag>
+	<tag>
+		<name>Static</name>
+		<tag-class>com.woooha.web.tag.StaticTag</tag-class>
+		<body-content>empty</body-content>
+        <attribute>
+            <description><![CDATA[resource type]]></description>
+            <name>type</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Which resource to be retrieved]]></description>
+            <name>resource</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description><![CDATA[Whether output base64-coded result]]></description>
+            <name>outputBase64</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+	</tag>
 </taglib>

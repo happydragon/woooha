@@ -1,5 +1,7 @@
 package com.woooha.entity.video;
 
+import com.woooha.entity.core.AbstractEntity;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +13,8 @@ import java.util.List;
  * Time: 下午9:42
  * To change this template use File | Settings | File Templates.
  */
-public class Video implements Serializable {
+public class Video extends AbstractEntity {
 
-    private int id;
     private String title;
     private String abbrTitle;
     private float score;
@@ -32,14 +33,6 @@ public class Video implements Serializable {
 
     //optional
     private List<VideoTag> tags;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;

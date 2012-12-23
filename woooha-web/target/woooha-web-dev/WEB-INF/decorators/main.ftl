@@ -10,7 +10,7 @@
         <script type="text/javascript" src="<@s.url value="/js/core.js"/>"></script>
         <script type="text/javascript" src="<@s.url value="/js/jquery-1.8.3.min.js"/>"></script>
         <script type="text/javascript" src="<@s.url value="/js/jquery.tmpl.min.js"/>"></script>
-        <script type="text/javascript">var contextpath = "${base}";</script>
+        <script type="text/javascript">var contextpath = "${base}";var fullcontextpath = "<@s.url value="/" forceAddSchemeHostAndPort="true"/>";if (fullcontextpath.endWith("/")) {fullcontextpath = fullcontextpath.substr(0, fullcontextpath.length - 1);}</script>
         <link rel="stylesheet" href="<@s.url value="/css/core/packed__init.css"/>">
         <link rel="stylesheet" href="<@s.url value="/css/core/packed_site_nav.css"/>">
 		<@decorator.head/>

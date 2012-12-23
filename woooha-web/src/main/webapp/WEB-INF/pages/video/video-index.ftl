@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>woooha-list</title>
+        <#assign woooha=JspTaglibs["/WEB-INF/tld/woooha-tags.tld"]>
 		<#include "/WEB-INF/pages/video/video-index-seg-css.ftl">
 	</head>
 	<body>
@@ -27,7 +28,7 @@
                                         <ul>
                                             <li class="poster">
                                                 <a href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">
-                                                    <img src="<@s.url value="/img/video"/>/${video.pic}" alt="${video.title}" rel="nofollow">
+                                                    <img src="<@woooha.Static resource="${video.pic}"/>" alt="${video.title}" rel="nofollow">
                                                 </a>
                                             </li>
                                             <li class="title">
@@ -58,7 +59,7 @@
                                     <ul>
                                         <li class="poster">
                                             <a href="<@s.url value="/video/videoDetail.vhtml?id=${video.id}"/>">
-                                                <img class="lazy" src="<@s.url value="/img/video"/>/${video.pic}" alt="${video.abbrTitle}"
+                                                <img class="lazy" src="<@woooha.Static resource="${video.pic}"/>" alt="${video.abbrTitle}"
                                                      rel="nofollow" style="display: inline-block;">
                                             </a>
                                         </li>
@@ -83,8 +84,8 @@
                                     <div class="review-hd" style="border:1px solid #D7D7D7;">
                                         <div>
                                             <a href="<@s.url value="/video/videoDetail.vhtml?id=${video.id}"/>">
-                                                <img class="lazy" data-original="<@s.url value="/img/video"/>/${video.pic}"
-                                                    src="<@s.url value="/img/video"/>/${video.pic}"
+                                                <img class="lazy" data-original="<@woooha.Static resource="${video.pic}"/>"
+                                                    src="<@woooha.Static resource="${video.pic}"/>"
                                                     alt="${video.abbrTitle}" style="display: inline-block;">
                                             </a>
                                         </div>

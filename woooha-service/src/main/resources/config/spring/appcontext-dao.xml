@@ -24,4 +24,8 @@
 		<property name="sqlMapClient" ref="Woooha.SqlMapClient"/>
 	</bean>
 
+    <bean id="musicDao" class="com.woooha.dao.ibatis.music.MusicIbatisDao">
+        <property name="sqlMapClient" ref="Woooha.SqlMapClient"/>
+    </bean>
+
 </beans>

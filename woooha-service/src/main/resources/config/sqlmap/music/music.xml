@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Music">
+    <typeAlias alias="Music" type="com.woooha.entity.music.Music" />
+    <typeAlias alias="MusicCategory" type="com.woooha.entity.music.MusicCategory" />
+
+    <resultMap id="MusicResult" class="Music">
+        <result column="ID" property="id"/>
+        <result column="Title" property="title"/>
+        <result property="singer" resultMap="Global.CharacterRefResult"/>
+        <result property="category" resultMap="Music.MusicCategoryRefResult"/>
+        <result column="Cover" property="cover"/>
+        <result column="PlayUrl" property="playUrl"/>
+        <result column="Seconds" property="seconds"/>
+        <result column="IntroUrl" property="introUrl"/>
+        <!--<result column="Lyric" property="lyric"/>-->
+        <result column="PlayCount" property="playCount"/>
+        <result column="CreateTime" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="MusicFullResult" class="Music" extends="MusicResult">
+        <result column="Lyric" property="lyric"/>
+        <result column="Week" property="week"/>
+        <result column="WeekPlayCount" property="weekPlayCount"/>
+        <result column="Recommend" property="recommend"/>
+    </resultMap>
+
+    <resultMap id="MusicCategoryResult" class="MusicCategory">
+        <result column="ID" property="id"/>
+        <result column="Name" property="name"/>
+        <result column="Intro" property="intro"/>
+        <result column="Recommend" property="recommend"/>
+        <result column="Order" property="order"/>
+    </resultMap>
+
+    <resultMap id="MusicCategoryRefResult" class="MusicCategory">
+        <result column="CAT_ID" property="id"/>
+        <result column="CAT_Name" property="name"/>
+        <result column="CAT_Intro" property="intro"/>
+        <result column="CAT_Recommend" property="recommend"/>
+        <result column="CAT_Order" property="order"/>
+    </resultMap>
+
+    <sql id="MusicBasicColumns">
+        m.ID, m.Title, m.Cover, m.PlayUrl, m.Seconds, m.IntroUrl, m.PlayCount, m.CreateTime
+    </sql>
+    <sql id="SelectMusicBasic_Fragment">
+        SELECT <include refid="MusicBasicColumns"/>,
+        c.ID AS CHA_ID, c.Name AS CHA_Name, c.Intro AS CHA_Intro, c.CreateTime AS CHA_CreateTime,
+        mc.ID AS CAT_ID, mc.Name AS CAT_Name, mc.Intro AS CAT_Intro, mc.Recommend AS CAT_Recommend, mc.`Order` AS CAT_Order
+        FROM music m LEFT JOIN `character` c ON m.SingerId = c.ID
+        LEFT JOIN music_category mc ON m.CategoryId = mc.ID
+    </sql>
+    
+    <select id="getCategory" resultMap="MusicCategoryResult" parameterClass="int">
+        <![CDATA[SELECT * FROM music_category WHERE ID = #categoryId#]]>
+    </select>
+
+    <select id="getAllCategory" resultMap="MusicCategoryResult">
+        SELECT * FROM music_category ORDER BY `Order`
+    </select>
+
+    <select id="getHotMusics" resultMap="MusicResult" parameterClass="int">
+        <include refid="SelectMusicBasic_Fragment"/>
+        WHERE m.CategoryId = #categoryId#
+        ORDER BY m.`Week` DESC, m.WeekPlayCount DESC
+        LIMIT 20
+    </select>
+    
+    <select id="getRecommendMusics" resultMap="MusicResult">
+        <include refid="SelectMusicBasic_Fragment"/>
+        WHERE m.Recommend > 0
+        ORDER BY m.Recommend DESC
+        LIMIT 40
+    </select>
+
+    <select id="getLyric" resultClass="string" parameterClass="int">
+        SELECT Lyric FROM music WHERE ID = #musicId#
+    </select>
+
+</sqlMap>

@@ -10,6 +10,17 @@ String.prototype.prependcontext = function() {
     return result.startsWith(contextpath) ? result: contextpath + result;
 }
 
+String.prototype.prependfullcontext = function() {
+    if (typeof fullcontextpath == "undefined") {
+        throw new Error("global variable fullcontextpath not found, maybe you not include common.ftl.");
+    }
+    if (this.startsWith(fullcontextpath)) {
+        return this.toString();
+    }
+    var result = (this.startsWith("/") ? "" : "/") + this;
+    return fullcontextpath + result;
+}
+
 String.prototype.trim = function() {
     if (this == void 0) {throw new Error("Illegal argument error.");}
     return this.replace(/(^\s+)|(\s+$)/g, "");
@@ -18,6 +29,11 @@ String.prototype.trim = function() {
 String.prototype.trimIf = function(ifTrim) {
     if (this == void 0) {throw new Error("Illegal argument error.");}
     return ifTrim == true ? this.trim() : this.toString();
+}
+
+String.prototype.prependIfNotStart = function(start) {
+    if (this == void 0) {throw new Error("Illegal argument error.");}
+    return this.startsWith(start) ? this.toString() : start + this;
 }
 
 /**
@@ -34,6 +50,11 @@ String.prototype.isBlank = function() {
 String.prototype.startsWith = function(str) {
     if (this == void 0) {throw new Error("Illegal argument error.");}
     return this.substr(0, str.length) == str;
+}
+
+String.prototype.endWith = function (str) {
+    if (this == void 0) {throw new Error("Illegal argument error.");}
+    return this.substring(this.length - str.length) == str;
 }
 
 String.prototype.toMap = function(sep1, sep2) {

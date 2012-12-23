@@ -1,7 +1,8 @@
 <html>
 	<head>
         <#setting date_format="yyyy-MM-dd"/>
-		<title>喔哈视频</title>
+        <#assign woooha=JspTaglibs["/WEB-INF/tld/woooha-tags.tld"]>
+        <title>喔哈视频</title>
         <link rel="stylesheet" href="<@s.url value="/css/core/packed_init2.css"/>">
         <link rel="stylesheet" href="<@s.url value="/css/core/packed__all.css"/>">
         <#include "/WEB-INF/pages/video/video-list-seg-css.ftl">
@@ -17,7 +18,7 @@
                             <@s.iterator value="latestVideos" var="rVideo" status="videoStat">
                                 <div class="item mod<@s.if test="#videoStat.odd == false"> odd</@s.if>">
                                     <a class="thumb" href="<@s.url action="videoDetail" namespace="/video"/>?id=${video.id}">
-                                        <img src="<@s.url value="/img/video"/>/${video.pic}" alt="${video.title}">
+                                        <img src="<@woooha.Static resource="${video.pic}"/>" alt="${video.title}">
                                     </a>
                                     <div class="intro">
                                         <h3>

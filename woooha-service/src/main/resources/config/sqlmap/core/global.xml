@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Global">
+    <typeAlias alias="Character" type="com.woooha.entity.core.Character"/>
+
+    <resultMap id="CharacterResult" class="Character">
+        <result column="ID" property="id"/>
+        <result column="Name" property="name"/>
+        <result column="Intro" property="intro"/>
+        <result column="CreateTime" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="CharacterRefResult" class="Character">
+        <result column="CHA_ID" property="id"/>
+        <result column="CHA_Name" property="name"/>
+        <result column="CHA_Intro" property="intro"/>
+        <result column="CHA_CreateTime" property="createTime"/>
+    </resultMap>
+
+    <select id="getCharacter" resultMap="CharacterResult" parameterClass="int">
+        <![CDATA[SELECT * FROM `character` WHERE ID = #characterId#]]>
+    </select>
+
+</sqlMap>

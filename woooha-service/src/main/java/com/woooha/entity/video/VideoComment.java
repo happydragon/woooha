@@ -1,5 +1,6 @@
 package com.woooha.entity.video;
 
+import com.woooha.entity.core.AbstractEntity;
 import com.woooha.util.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
@@ -13,9 +14,8 @@ import java.util.Date;
  * Time: 上午10:52
  * To change this template use File | Settings | File Templates.
  */
-public class VideoComment implements Serializable {
+public class VideoComment extends AbstractEntity {
 
-    private int id;
     private int videoId;
     private String videoAbbrTitle;
     private float videoUserScore;
@@ -26,14 +26,6 @@ public class VideoComment implements Serializable {
     private Integer replyToId;
     private VideoComment replyTo;
     private Date createTime;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getVideoId() {
         return videoId;

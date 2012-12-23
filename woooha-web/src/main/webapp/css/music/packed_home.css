@@ -253,3 +253,71 @@ h2 .ll {
     color: #666;
     font-size: 14px
 }
+
+h2.lrc-title {
+    color: #111;
+    padding-top: 7px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 8px;
+    background-color: #AFC7BF;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.lrc-wrapper {
+    color: #666;
+    overflow-y: auto;
+    bottom: 50px;
+    line-height: 13px;
+    font-size: 12px;
+    height: 295px;
+}
+
+.lrc-wrapper ul {
+    padding: 0 5px;
+}
+
+.lrc-wrapper li {
+    text-align: left;
+}
+
+.lrc-wrapper .curr {
+    color: #1D94E1;
+}
+
+.listening-icon {
+    display: block;
+    float: right;
+    height: 22px;
+    width: 20px;
+    margin-right: 8px;
+    background: url(../../img/music/OVZwOkXW.gif) no-repeat center center;
+}
+
+#player-panel {
+    background-color: #ffffff;
+    width: 590px;
+    border-bottom: 1px solid #EEEBE7;
+}
+
+#lrc-panel {
+    background-color: #ffffff;
+    width: 310px;
+    /*border-bottom: 1px solid #EEEBE7;*/
+}
+
+.player-fixed {
+    position: fixed;
+    top: 0;
+    z-index: 1020;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); /* IE6-9 */
+}
+
+.lrc-fixed {
+    position: fixed;
+    top: 0;
+    z-index: 1020;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); /* IE6-9 */
+}

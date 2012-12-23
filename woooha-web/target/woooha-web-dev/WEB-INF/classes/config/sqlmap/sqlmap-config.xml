@@ -8,7 +8,11 @@
 		maxTransactions="3000" useStatementNamespaces="true"/>
 		
 	<sqlMap resource="config/sqlmap/core/system.xml"/>
+	<sqlMap resource="config/sqlmap/core/global.xml"/>
+
 	<sqlMap resource="config/sqlmap/video/video.xml"/>
 	<sqlMap resource="config/sqlmap/video/video-comment.xml"/>
+
+	<sqlMap resource="config/sqlmap/music/music.xml"/>
 
 </sqlMapConfig>
